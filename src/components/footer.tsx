@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Zap, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react'
+import Image from 'next/image'
+import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -39,9 +40,13 @@ export function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-light to-primary-DEFAULT rounded-lg flex items-center justify-center">
-                <Zap className="w-6 h-6 text-white" />
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Simix Logo"
+                width={60}
+                height={60}
+                className="w-20 h-20 object-contain"
+              />
               <span className="text-2xl font-bold">SIMIX</span>
             </Link>
             
@@ -55,19 +60,26 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center text-gray-300">
                 <Mail className="w-5 h-5 mr-3 text-primary-light" />
-                <a href="mailto:info@simix.com" className="hover:text-white transition-colors">
-                  info@simix.com
+                <a href="mailto:info@simixiq.com" className="hover:text-white transition-colors">
+                  info@simixiq.com
                 </a>
               </div>
               <div className="flex items-center text-gray-300">
                 <Phone className="w-5 h-5 mr-3 text-primary-light" />
-                <a href="tel:+1234567890" className="hover:text-white transition-colors">
-                  +1 (234) 567-890
+                <a href="tel:+9647710882275" className="hover:text-white transition-colors">
+                  +964 771 088 2275
                 </a>
               </div>
               <div className="flex items-center text-gray-300">
                 <MapPin className="w-5 h-5 mr-3 text-primary-light" />
-                <span>123 Automation St, Tech City, TC 12345</span>
+                <a 
+                  href="https://maps.google.com/?q=Mosul,Iraq" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Iraq Mosul
+                </a>
               </div>
             </div>
           </div>

@@ -85,7 +85,28 @@ export default function LiquidGlassServices() {
   if (!mounted) return null
 
   return (
-    <section className="relative py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900 min-h-screen">
+    <section className="relative pb-24 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900 min-h-screen">
+      {/* Wave Separator (flipped, faces hero) */}
+      <div className="w-full overflow-hidden" aria-hidden="true" style={{ transform: 'rotate(180deg)' }}>
+        <svg
+          className="w-full h-8 md:h-10"
+          viewBox="0 0 1440 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="services-vertical-gradient" x1="0" y1="0" x2="0" y2="40" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#5F7DB7" />
+              <stop offset="100%" stopColor="#F2F4FF" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M0,20 Q720,40 1440,20 L1440,40 L0,40 Z"
+            fill="url(#services-vertical-gradient)"
+          />
+        </svg>
+      </div>
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-blue-200/20 to-purple-200/20 rounded-full blur-3xl animate-pulse"></div>
@@ -93,27 +114,11 @@ export default function LiquidGlassServices() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-green-200/20 to-blue-200/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '4s'}}></div>
       </div>
 
-      {/* Decorative Top Separator */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden pointer-events-none" aria-hidden="true">
-        <svg className="w-full h-16 md:h-24" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill="url(#services-top)" d="M0,80 C480,0 960,160 1440,80 L1440,0 L0,0 Z" />
-          <defs>
-            <linearGradient id="services-top" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#5F7DB7" />
-              <stop offset="0.5" stopColor="#354059" />
-              <stop offset="1" stopColor="#696E82" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-20">
-          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 dark:from-white dark:via-blue-100 dark:to-purple-100 bg-clip-text text-transparent mb-6">
-            Our <span className="relative">Services
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-            </span>
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 text-center">
+            <span className="text-gray-900 dark:text-white">Our</span> <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-300 dark:via-purple-300 dark:to-pink-300 bg-clip-text text-transparent">Services</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Comprehensive solutions for industrial automation, smart buildings, and control systems

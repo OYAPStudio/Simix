@@ -40,15 +40,8 @@ export function HeroSection() {
     // Set initial states
     gsap.set([logo, title, subtitle, description, badges, buttons], {
       opacity: 0,
-      y: 30,
-    })
-
-    gsap.set(logo, {
-      scale: 0.9,
-    })
-
-    gsap.set(title, {
-      scale: 0.95,
+      y: 40,
+      scale: 0.98,
     })
 
     // Text content array for smooth transitions
@@ -101,13 +94,13 @@ export function HeroSection() {
       duration: 1,
     }, 0)
 
-    // Logo entrance - smooth and simple
+    // Logo entrance - smooth and modern
     tl.to(logo, {
       opacity: 1,
       y: 0,
       scale: 1,
-      duration: 0.6,
-      ease: 'power2.out',
+      duration: 0.7,
+      ease: 'power3.out',
     }, 0)
 
     // Title entrance
@@ -115,50 +108,50 @@ export function HeroSection() {
       opacity: 1,
       y: 0,
       scale: 1,
-      duration: 0.6,
-      ease: 'power2.out',
+      duration: 0.7,
+      ease: 'power3.out',
     }, 0.1)
 
     // Subtitle entrance
     tl.to(subtitle, {
       opacity: 1,
       y: 0,
-      duration: 0.5,
-      ease: 'power2.out',
+      duration: 0.6,
+      ease: 'power3.out',
     }, 0.2)
 
     // Description entrance
     tl.to(description, {
       opacity: 1,
       y: 0,
-      duration: 0.5,
-      ease: 'power2.out',
+      duration: 0.6,
+      ease: 'power3.out',
     }, 0.3)
 
     // Badges entrance - appear during scroll
     tl.to(badges?.querySelectorAll('.badge-item') || [], {
       opacity: 1,
       y: 0,
-      duration: 0.4,
-      stagger: 0.05,
-      ease: 'power2.out',
+      duration: 0.5,
+      stagger: 0.07,
+      ease: 'power3.out',
     }, 0.4)
 
     // Buttons entrance - appear during scroll
     tl.to(buttons?.querySelectorAll('.button-item') || [], {
       opacity: 1,
       y: 0,
-      duration: 0.4,
-      stagger: 0.05,
-      ease: 'power2.out',
+      duration: 0.5,
+      stagger: 0.07,
+      ease: 'power3.out',
     }, 0.5)
 
     // Final fade out
     tl.to([logo, title, subtitle, description, badges, buttons], {
       opacity: 0,
       y: -20,
-      duration: 0.6,
-      ease: 'power2.in',
+      duration: 0.7,
+      ease: 'power3.in',
     }, 1.2)
 
     // Scroll hint animation
@@ -181,17 +174,10 @@ export function HeroSection() {
   }, [])
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
       <div ref={heroRef} className="relative h-screen overflow-hidden">
         
-        {/* Simple Clean Background - DARKER */}
-        <div 
-          ref={backgroundRef}
-          className="absolute inset-0 will-change-transform"
-          style={{
-            background: 'linear-gradient(135deg, #2A3441 0%, #1A1D23 50%, #0F1419 100%)'
-          }}
-        />
+        {/* Remove old background div, as the gradient is now on the container */}
 
         {/* Subtle Grid Pattern Only */}
         <div 
@@ -206,18 +192,18 @@ export function HeroSection() {
         />
 
         {/* Main Content - PROPERLY CENTERED */}
-        <div className="relative z-10 h-full flex items-center justify-center">
+        <div className="relative z-10 h-full flex items-center justify-center pt-12 pb-16 sm:pt-0 sm:pb-0">
           <div className="text-center px-4 sm:px-6 w-full max-w-4xl mx-auto">
             
-            {/* Enhanced Logo */}
-            <div ref={logoRef} className="mb-8 will-change-transform">
+            {/* Enhanced Logo - Reduced size for mobile */}
+            <div ref={logoRef} className="mt-0 mb-0 will-change-transform">
               <div className="inline-flex items-center justify-center">
                 <Image
                   src="/logo.png"
                   alt="Simix Logo"
-                  width={100}
-                  height={100}
-                  className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28"
+                  width={260}
+                  height={260}
+                  className="w-32 h-32 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem]"
                   style={{
                     filter: 'drop-shadow(0 0 20px rgba(95,125,183,0.5))',
                   }}
@@ -227,7 +213,7 @@ export function HeroSection() {
                   }}
                 />
                 <Zap 
-                  className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 text-white hidden"
+                  className="w-32 h-32 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem] text-white hidden"
                   style={{
                     filter: 'drop-shadow(0 0 20px rgba(95,125,183,0.5))',
                   }}
@@ -238,7 +224,7 @@ export function HeroSection() {
             {/* Main Title */}
             <h1 
               ref={titleRef}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 tracking-tight leading-tight will-change-transform"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-1 -mt-18 md:-mt-18 tracking-tight leading-tight will-change-transform"
               style={{
                 background: 'linear-gradient(45deg, #ffffff 20%, #f0f9ff 60%)',
                 backgroundClip: 'text',
@@ -253,19 +239,19 @@ export function HeroSection() {
             {/* Subtitle */}
             <h2 
               ref={subtitleRef}
-              className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-white/90 mb-2 tracking-wide will-change-transform"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-white/90 mb-0 tracking-wide will-change-transform"
             >
               Engineering Excellence
             </h2>
 
-            <h3 className="text-base sm:text-lg md:text-xl font-extralight text-white/70 mb-6 tracking-widest">
+            <h3 className="text-sm sm:text-base md:text-lg font-extralight text-white/70 mb-2 tracking-widest">
               in Automation
             </h3>
 
             {/* Clean Description */}
             <p 
               ref={descriptionRef}
-              className="text-sm sm:text-base md:text-lg text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed will-change-transform"
+              className="text-sm sm:text-sm md:text-base text-white/80 mb-4 max-w-xs sm:max-w-2xl mx-auto leading-snug px-2 sm:px-0 will-change-transform"
             >
               Leading provider of industrial control systems, smart building solutions, and automation technologies
             </p>
@@ -273,10 +259,10 @@ export function HeroSection() {
             {/* Service Badges - Enhanced Mobile Layout */}
             <div 
               ref={badgesRef}
-              className="mb-8 will-change-transform"
+              className="mb-6 will-change-transform"
             >
               {/* Top Row - 3 badges */}
-              <div className="flex justify-center gap-3 mb-3">
+              <div className="flex flex-wrap justify-center gap-2 mb-2">
                 {[
                   { icon: Settings, label: 'PLC & SCADA', color: '#60A5FA' },
                   { icon: Home, label: 'Smart Buildings', color: '#34D399' },
@@ -284,13 +270,13 @@ export function HeroSection() {
                 ].map((item, index) => (
                   <div 
                     key={index}
-                    className="badge-item flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 text-white font-medium shadow-lg will-change-transform opacity-0"
+                    className="badge-item flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 text-white font-medium shadow-lg will-change-transform opacity-0"
                   >
                     <div 
-                      className="w-6 h-6 rounded-md flex items-center justify-center"
+                      className="w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center"
                       style={{ backgroundColor: item.color }}
                     >
-                      <item.icon className="w-3 h-3 text-white" />
+                      <item.icon className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
                     </div>
                     <span className="text-xs sm:text-sm">
                       {item.label}
@@ -301,12 +287,12 @@ export function HeroSection() {
               
               {/* Bottom Row - 1 badge centered */}
               <div className="flex justify-center">
-                <div className="badge-item flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 text-white font-medium shadow-lg will-change-transform opacity-0">
+                <div className="badge-item flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 text-white font-medium shadow-lg will-change-transform opacity-0">
                   <div 
-                    className="w-6 h-6 rounded-md flex items-center justify-center"
+                    className="w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center"
                     style={{ backgroundColor: '#FB7185' }}
                   >
-                    <Zap className="w-3 h-3 text-white" />
+                    <Zap className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
                   </div>
                   <span className="text-xs sm:text-sm">
                     KNX Automation
@@ -315,15 +301,15 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons - Stacked on mobile */}
             <div 
               ref={buttonsRef}
-              className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto"
+              className="flex flex-col gap-3 sm:gap-4 justify-center max-w-md mx-auto px-4"
             >
               <div className="button-item will-change-transform opacity-0">
                 <a
                   href="/services"
-                  className="group inline-flex items-center justify-center px-6 py-3 bg-white text-[#1A1D23] font-bold rounded-xl shadow-xl text-sm sm:text-base transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+                  className="group inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-white text-[#1A1D23] font-bold rounded-xl shadow-xl text-sm sm:text-base transition-all duration-300 hover:scale-105 w-full"
                 >
                   Explore Services
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
@@ -333,7 +319,7 @@ export function HeroSection() {
               <div className="button-item will-change-transform opacity-0">
                 <a
                   href="/contact"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-white/10 border border-white/30 text-white font-bold rounded-xl backdrop-blur-md text-sm sm:text-base hover:bg-white/20 transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+                  className="inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-white/10 border border-white/30 text-white font-bold rounded-xl backdrop-blur-md text-sm sm:text-base hover:bg-white/20 transition-all duration-300 hover:scale-105 w-full"
                 >
                   Get Started
                 </a>
@@ -345,12 +331,12 @@ export function HeroSection() {
         {/* Scroll Hint */}
         <div 
           ref={scrollHintRef}
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-center will-change-transform"
+          className="absolute bottom-8 sm:bottom-12 left-1/2 transform -translate-x-1/2 text-center will-change-transform"
         >
           <div className="animate-bounce">
-            <ChevronDown className="w-8 h-8 text-white/60 mx-auto mb-3" />
+            <ChevronDown className="w-6 h-6 sm:w-8 sm:h-8 text-white/60 mx-auto mb-2 sm:mb-3" />
           </div>
-          <p className="text-white/60 text-sm font-medium tracking-widest uppercase">
+          <p className="text-white/60 text-xs sm:text-sm font-medium tracking-widest uppercase">
             Scroll to discover
           </p>
         </div>
@@ -363,6 +349,27 @@ export function HeroSection() {
             id="progress-bar"
           />
         </div>
+      </div> {/* End of heroRef main content */}
+      {/* Glass Wave Separator - simple but powerful */}
+      <div className="w-full overflow-hidden" aria-hidden="true">
+        <svg
+          className="w-full h-8 md:h-10"
+          viewBox="0 0 1440 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="hero-vertical-gradient" x1="0" y1="40" x2="0" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#F2F4FF" />
+              <stop offset="100%" stopColor="#5F7DB7" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M0,20 Q720,40 1440,20 L1440,40 L0,40 Z"
+            fill="url(#hero-vertical-gradient)"
+          />
+        </svg>
       </div>
     </div>
   )
