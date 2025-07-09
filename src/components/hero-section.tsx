@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Settings, Home, Cpu, Zap, ChevronDown } from 'lucide-react'
-import Link from 'next/link'
 import Image from 'next/image'
 
 // Register GSAP plugins
@@ -41,131 +40,132 @@ export function HeroSection() {
     // Set initial states
     gsap.set([logo, title, subtitle, description, badges, buttons], {
       opacity: 0,
-      y: 100,
+      y: 30,
     })
 
     gsap.set(logo, {
-      scale: 0.5,
-      rotation: 180,
+      scale: 0.9,
     })
 
     gsap.set(title, {
-      scale: 0.8,
-      letterSpacing: '-0.1em'
+      scale: 0.95,
     })
 
-    gsap.set(background, {
-      scale: 1.2,
-      opacity: 0.8,
-    })
+    // Text content array for smooth transitions
+    const textContent = [
+      "Leading provider of industrial control systems, smart building solutions, and automation technologies",
+      "Transforming industries with cutting-edge automation solutions and intelligent control systems",
+      "Your trusted partner in industrial automation and smart technology integration"
+    ]
+    let currentTextIndex = 0
 
     // Create the pinned scroll animation
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
         start: 'top top',
-        end: '+=150%', // Pin for 150% of viewport height
+        end: '+=150%',
         pin: hero,
         pinSpacing: true,
         scrub: 1,
         anticipatePin: 1,
         onUpdate: (self) => {
-          // Update background based on scroll progress
           const progress = self.progress
-          gsap.set(background, {
-            scale: 1.2 + (progress * 0.5),
-            rotation: progress * 15,
-            opacity: 0.8 - (progress * 0.6),
-          })
-        },
+          
+          // Smooth text transitions
+          if (progress < 0.3) {
+            currentTextIndex = 0
+          } else if (progress < 0.6) {
+            currentTextIndex = 1
+          } else {
+            currentTextIndex = 2
+          }
+          
+          if (description && description.textContent !== textContent[currentTextIndex]) {
+            gsap.to(description, {
+              opacity: 0,
+              duration: 0.2,
+              onComplete: () => {
+                description.textContent = textContent[currentTextIndex]
+                gsap.to(description, { opacity: 1, duration: 0.2 })
+              }
+            })
+          }
+        }
       }
     })
 
-    // Background animation
+    // Keep background dark - just subtle opacity change
     tl.to(background, {
-      scale: 2,
-      rotation: 30,
-      opacity: 0.2,
+      opacity: 0.8,
       duration: 1,
     }, 0)
 
-    // Logo entrance animation
+    // Logo entrance - smooth and simple
     tl.to(logo, {
       opacity: 1,
       y: 0,
       scale: 1,
-      rotation: 0,
-      duration: 0.8,
-      ease: 'back.out(1.7)',
+      duration: 0.6,
+      ease: 'power2.out',
     }, 0)
 
-    // Title entrance with letter spacing
+    // Title entrance
     tl.to(title, {
       opacity: 1,
       y: 0,
       scale: 1,
-      letterSpacing: '0em',
-      duration: 1,
-      ease: 'power3.out',
-    }, 0.2)
+      duration: 0.6,
+      ease: 'power2.out',
+    }, 0.1)
 
     // Subtitle entrance
     tl.to(subtitle, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
+      duration: 0.5,
       ease: 'power2.out',
-    }, 0.4)
+    }, 0.2)
 
     // Description entrance
     tl.to(description, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
+      duration: 0.5,
       ease: 'power2.out',
-    }, 0.6)
+    }, 0.3)
 
-    // Badges entrance (stagger)
-    tl.to(badges?.children || [], {
+    // Badges entrance - appear during scroll
+    tl.to(badges?.querySelectorAll('.badge-item') || [], {
       opacity: 1,
       y: 0,
+      duration: 0.4,
+      stagger: 0.05,
+      ease: 'power2.out',
+    }, 0.4)
+
+    // Buttons entrance - appear during scroll
+    tl.to(buttons?.querySelectorAll('.button-item') || [], {
+      opacity: 1,
+      y: 0,
+      duration: 0.4,
+      stagger: 0.05,
+      ease: 'power2.out',
+    }, 0.5)
+
+    // Final fade out
+    tl.to([logo, title, subtitle, description, badges, buttons], {
+      opacity: 0,
+      y: -20,
       duration: 0.6,
-      stagger: 0.1,
-      ease: 'back.out(1.7)',
-    }, 0.8)
-
-    // Buttons entrance
-    tl.to(buttons?.children || [], {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.2,
-      ease: 'back.out(1.7)',
+      ease: 'power2.in',
     }, 1.2)
 
-    // Final phase - fade everything out
-    tl.to([title, subtitle, description, badges, buttons], {
-      opacity: 0,
-      y: -50,
-      scale: 0.9,
-      duration: 0.8,
-      ease: 'power2.in',
-    }, 1.8)
-
-    tl.to(logo, {
-      opacity: 0,
-      scale: 0.3,
-      y: -200,
-      rotation: -360,
-      duration: 1,
-      ease: 'power2.in',
-    }, 1.8)
-
-    // Scroll hint animation (separate from main timeline)
+    // Scroll hint animation
     if (scrollHint) {
       gsap.to(scrollHint, {
         opacity: 0,
-        y: 50,
+        y: 30,
         scrollTrigger: {
           trigger: container,
           start: 'top top',
@@ -175,34 +175,8 @@ export function HeroSection() {
       })
     }
 
-    // Floating elements animation
-    const floatingElements = container.querySelectorAll('.floating-element')
-    floatingElements.forEach((el, index) => {
-      gsap.to(el, {
-        y: -30,
-        x: Math.sin(index) * 20,
-        rotation: Math.cos(index) * 10,
-        duration: 3 + index,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: index * 0.5,
-      })
-    })
-
-    // Background gradient animation
-    const gradientAnimation = gsap.to(background, {
-      background: 'linear-gradient(135deg, #696E82 0%, #5F7DB7 50%, #354059 100%)',
-      duration: 4,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power2.inOut',
-    })
-
     return () => {
-      // Cleanup
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-      gradientAnimation.kill()
     }
   }, [])
 
@@ -210,76 +184,67 @@ export function HeroSection() {
     <div ref={containerRef} className="relative">
       <div ref={heroRef} className="relative h-screen overflow-hidden">
         
-        {/* Animated Background */}
+        {/* Simple Clean Background - DARKER */}
         <div 
           ref={backgroundRef}
           className="absolute inset-0 will-change-transform"
           style={{
-            background: 'linear-gradient(135deg, #5F7DB7 0%, #354059 50%, #696E82 100%)'
+            background: 'linear-gradient(135deg, #2A3441 0%, #1A1D23 50%, #0F1419 100%)'
           }}
         />
 
-        {/* Floating Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="floating-element absolute rounded-full bg-white/5 blur-xl will-change-transform"
-              style={{
-                width: `${80 + i * 30}px`,
-                height: `${80 + i * 30}px`,
-                left: `${10 + i * 11}%`,
-                top: `${15 + Math.sin(i) * 25}%`,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Grid Pattern Overlay */}
+        {/* Subtle Grid Pattern Only */}
         <div 
-          className="absolute inset-0 opacity-10"
+          className="absolute inset-0 opacity-2"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
             `,
-            backgroundSize: '60px 60px',
+            backgroundSize: '40px 40px',
           }}
         />
 
-        {/* Main Content */}
-        <div className="relative z-10 flex items-center justify-center h-full">
-          <div className="text-center px-4 max-w-6xl mx-auto">
+        {/* Main Content - PROPERLY CENTERED */}
+        <div className="relative z-10 h-full flex items-center justify-center">
+          <div className="text-center px-4 sm:px-6 w-full max-w-4xl mx-auto">
             
-            {/* Logo */}
-            <div ref={logoRef} className="mb-12 will-change-transform">
-              <div className="inline-flex items-center justify-center w-32 h-32 bg-white/10 rounded-full backdrop-blur-xl border border-white/20 shadow-2xl">
+            {/* Enhanced Logo */}
+            <div ref={logoRef} className="mb-8 will-change-transform">
+              <div className="inline-flex items-center justify-center">
                 <Image
                   src="/logo.png"
                   alt="Simix Logo"
-                  width={64}
-                  height={64}
-                  className="w-16 h-16"
+                  width={100}
+                  height={100}
+                  className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28"
+                  style={{
+                    filter: 'drop-shadow(0 0 20px rgba(95,125,183,0.5))',
+                  }}
                   onError={(e) => {
                     e.currentTarget.style.display = 'none'
                     e.currentTarget.nextElementSibling?.classList.remove('hidden')
                   }}
                 />
-                <Zap className="w-16 h-16 text-white hidden" />
+                <Zap 
+                  className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 text-white hidden"
+                  style={{
+                    filter: 'drop-shadow(0 0 20px rgba(95,125,183,0.5))',
+                  }}
+                />
               </div>
             </div>
 
             {/* Main Title */}
             <h1 
               ref={titleRef}
-              className="text-7xl md:text-9xl font-black text-white mb-6 tracking-tight leading-none will-change-transform"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 tracking-tight leading-tight will-change-transform"
               style={{
-                background: 'linear-gradient(45deg, #ffffff 30%, #f0f9ff 50%, #e0f2fe 70%)',
+                background: 'linear-gradient(45deg, #ffffff 20%, #f0f9ff 60%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                textShadow: '0 0 60px rgba(255,255,255,0.3)',
-                filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.2))',
+                filter: 'drop-shadow(0 0 30px rgba(255,255,255,0.4))',
               }}
             >
               SIMIX
@@ -288,82 +253,90 @@ export function HeroSection() {
             {/* Subtitle */}
             <h2 
               ref={subtitleRef}
-              className="text-3xl md:text-5xl font-light text-white/90 mb-4 tracking-wide will-change-transform"
-              style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
+              className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-white/90 mb-2 tracking-wide will-change-transform"
             >
               Engineering Excellence
             </h2>
 
-            <h3 className="text-xl md:text-3xl font-extralight text-white/70 mb-8 tracking-widest">
+            <h3 className="text-base sm:text-lg md:text-xl font-extralight text-white/70 mb-6 tracking-widest">
               in Automation
             </h3>
 
-            {/* Description */}
+            {/* Clean Description */}
             <p 
               ref={descriptionRef}
-              className="text-lg md:text-xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed will-change-transform"
+              className="text-sm sm:text-base md:text-lg text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed will-change-transform"
             >
               Leading provider of industrial control systems, smart building solutions, and automation technologies
             </p>
 
-            {/* Service Badges */}
+            {/* Service Badges - Enhanced Mobile Layout */}
             <div 
               ref={badgesRef}
-              className="flex flex-wrap justify-center gap-6 mb-16"
+              className="mb-8 will-change-transform"
             >
-              {[
-                { icon: Settings, label: 'PLC & SCADA', color: '#60A5FA' },
-                { icon: Home, label: 'Smart Buildings', color: '#34D399' },
-                { icon: Cpu, label: 'BMS Systems', color: '#A78BFA' },
-                { icon: Zap, label: 'KNX Automation', color: '#FB7185' },
-              ].map((item, index) => (
-                <div 
-                  key={index}
-                  className="group flex items-center gap-4 px-8 py-4 bg-white/5 backdrop-blur-2xl rounded-2xl border border-white/10 text-white font-medium shadow-2xl cursor-pointer hover:bg-white/10 transition-all duration-300 will-change-transform"
-                  style={{
-                    boxShadow: `0 0 30px ${item.color}20`,
-                  }}
-                >
+              {/* Top Row - 3 badges */}
+              <div className="flex justify-center gap-3 mb-3">
+                {[
+                  { icon: Settings, label: 'PLC & SCADA', color: '#60A5FA' },
+                  { icon: Home, label: 'Smart Buildings', color: '#34D399' },
+                  { icon: Cpu, label: 'BMS Systems', color: '#A78BFA' },
+                ].map((item, index) => (
                   <div 
-                    className="w-10 h-10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-                    style={{ backgroundColor: item.color }}
+                    key={index}
+                    className="badge-item flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 text-white font-medium shadow-lg will-change-transform opacity-0"
                   >
-                    <item.icon className="w-5 h-5 text-white" />
+                    <div 
+                      className="w-6 h-6 rounded-md flex items-center justify-center"
+                      style={{ backgroundColor: item.color }}
+                    >
+                      <item.icon className="w-3 h-3 text-white" />
+                    </div>
+                    <span className="text-xs sm:text-sm">
+                      {item.label}
+                    </span>
                   </div>
-                  <span className="text-lg">
-                    {item.label}
+                ))}
+              </div>
+              
+              {/* Bottom Row - 1 badge centered */}
+              <div className="flex justify-center">
+                <div className="badge-item flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 text-white font-medium shadow-lg will-change-transform opacity-0">
+                  <div 
+                    className="w-6 h-6 rounded-md flex items-center justify-center"
+                    style={{ backgroundColor: '#FB7185' }}
+                  >
+                    <Zap className="w-3 h-3 text-white" />
+                  </div>
+                  <span className="text-xs sm:text-sm">
+                    KNX Automation
                   </span>
                 </div>
-              ))}
+              </div>
             </div>
 
             {/* CTA Buttons */}
             <div 
               ref={buttonsRef}
-              className="flex flex-col sm:flex-row gap-8 justify-center"
+              className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto"
             >
-              <div className="will-change-transform">
-                <Link
+              <div className="button-item will-change-transform opacity-0">
+                <a
                   href="/services"
-                  className="group inline-flex items-center justify-center px-12 py-6 bg-white text-[#354059] font-bold rounded-2xl shadow-2xl text-xl transition-all duration-300 hover:shadow-white/20 hover:scale-105"
+                  className="group inline-flex items-center justify-center px-6 py-3 bg-white text-[#1A1D23] font-bold rounded-xl shadow-xl text-sm sm:text-base transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                 >
                   Explore Services
-                  <ArrowRight className="ml-4 w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
-                </Link>
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </a>
               </div>
               
-              <div className="will-change-transform">
-                <Link
+              <div className="button-item will-change-transform opacity-0">
+                <a
                   href="/contact"
-                  className="inline-flex items-center justify-center px-12 py-6 bg-transparent border-2 border-white/50 text-white font-bold rounded-2xl backdrop-blur-xl text-xl hover:bg-white hover:text-[#354059] hover:border-white transition-all duration-300 hover:scale-105"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-white/10 border border-white/30 text-white font-bold rounded-xl backdrop-blur-md text-sm sm:text-base hover:bg-white/20 transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                 >
                   Get Started
-                </Link>
+                </a>
               </div>
             </div>
           </div>
