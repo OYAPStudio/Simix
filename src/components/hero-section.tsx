@@ -344,27 +344,7 @@ export function HeroSection() {
 
         {/* Progress Indicator */}
       </div> {/* End of heroRef main content */}
-      {/* Glass Wave Separator - simple but powerful */}
-      <div className="w-full overflow-hidden" aria-hidden="true">
-        <svg
-          className="w-full h-8 md:h-10"
-          viewBox="0 0 1440 40"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="hero-vertical-gradient" x1="0" y1="40" x2="0" y2="0" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#F2F4FF" />
-              <stop offset="100%" stopColor="#5F7DB7" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M0,20 Q720,40 1440,20 L1440,40 L0,40 Z"
-            fill="url(#hero-vertical-gradient)"
-          />
-        </svg>
-      </div>
+      
     </div>
   )
 }

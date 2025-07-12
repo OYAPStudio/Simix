@@ -58,7 +58,19 @@ const services = [
   }
 ]
 
-export default function LiquidGlassServices() {
+interface LiquidGlassServicesProps {
+  hasTopBlur?: boolean
+  hasBottomBlur?: boolean
+  blurHeight?: 'sm' | 'md' | 'lg' | 'xl'
+  blurIntensity?: 'subtle' | 'medium' | 'strong'
+}
+
+export default function LiquidGlassServices({ 
+  hasTopBlur = false, 
+  hasBottomBlur = true,
+  blurHeight = 'lg',
+  blurIntensity = 'medium'
+}: LiquidGlassServicesProps) {
   const [mounted, setMounted] = useState(false)
   const [visibleItems, setVisibleItems] = useState<number[]>([])
 
@@ -84,8 +96,74 @@ export default function LiquidGlassServices() {
 
   if (!mounted) return null
 
+  // Blur height configurations
+  const blurHeights = {
+    sm: 'h-16',
+    md: 'h-24', 
+    lg: 'h-32',
+    xl: 'h-40'
+  }
+
+  // Blur intensity configurations
+  const blurIntensities = {
+    subtle: 'backdrop-blur-sm',
+    medium: 'backdrop-blur-md', 
+    strong: 'backdrop-blur-lg'
+  }
+
   return (
-    <section className="relative pb-24 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 min-h-screen overflow-hidden">
+    <section className="relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 min-h-screen overflow-hidden">
+      
+      {/* TOP GLASSMORPHISM BLUR TRANSITION (100% -> 0%) */}
+      {hasTopBlur && (
+        <div className={`absolute top-0 left-0 w-full ${blurHeights[blurHeight]} z-20 pointer-events-none`}>
+          {/* Glassmorphism Blur Gradient - Top to Bottom (100% -> 0%) */}
+          <div className={`absolute inset-0 ${blurIntensities[blurIntensity]} dark:hidden`} 
+               style={{
+                 background: `linear-gradient(to bottom, 
+                   rgba(255, 255, 255, 0.2) 0%, 
+                   rgba(255, 255, 255, 0.15) 20%, 
+                   rgba(255, 255, 255, 0.1) 40%, 
+                   rgba(255, 255, 255, 0.05) 60%, 
+                   rgba(255, 255, 255, 0.02) 80%, 
+                   rgba(255, 255, 255, 0) 100%)`,
+                 // Dark mode
+                 filter: 'var(--tw-backdrop-blur)'
+               }} />
+          
+          <div className={`absolute inset-0 ${blurIntensities[blurIntensity]} hidden dark:block`} 
+               style={{
+                 background: `linear-gradient(to bottom, 
+                   rgba(15, 23, 42, 0.3) 0%, 
+                   rgba(15, 23, 42, 0.2) 20%, 
+                   rgba(15, 23, 42, 0.15) 40%, 
+                   rgba(15, 23, 42, 0.08) 60%, 
+                   rgba(15, 23, 42, 0.03) 80%, 
+                   rgba(15, 23, 42, 0) 100%)`,
+                 filter: 'var(--tw-backdrop-blur)'
+               }} />
+          
+          {/* Glass reflection overlay - smoother transition */}
+          <div className="absolute inset-0 dark:hidden" 
+               style={{
+                 background: `linear-gradient(to bottom, 
+                   rgba(255, 255, 255, 0.08) 0%, 
+                   rgba(255, 255, 255, 0.04) 30%, 
+                   rgba(255, 255, 255, 0.02) 60%, 
+                   rgba(255, 255, 255, 0) 100%)`
+               }} />
+          
+          <div className="absolute inset-0 hidden dark:block" 
+               style={{
+                 background: `linear-gradient(to bottom, 
+                   rgba(51, 65, 85, 0.12) 0%, 
+                   rgba(51, 65, 85, 0.06) 30%, 
+                   rgba(51, 65, 85, 0.03) 60%, 
+                   rgba(51, 65, 85, 0) 100%)`
+               }} />
+        </div>
+      )}
+
       {/* Premium Background Pattern */}
       <div className="absolute inset-0">
         {/* Subtle grid */}
@@ -111,38 +189,6 @@ export default function LiquidGlassServices() {
         />
       </div>
 
-      {/* Wave Separator */}
-      <div className="w-full overflow-hidden" aria-hidden="true" style={{ transform: 'rotate(180deg)' }}>
-        <svg
-          className="w-full h-8 md:h-10"
-          viewBox="0 0 1440 40"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <linearGradient id="services-light-gradient" x1="0" y1="0" x2="0" y2="40" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#5F7DB7" />
-              <stop offset="100%" stopColor="#FFFFFF" />
-            </linearGradient>
-            <linearGradient id="services-dark-gradient" x1="0" y1="0" x2="0" y2="40" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#5F7DB7" />
-              <stop offset="100%" stopColor="#020617" />
-            </linearGradient>
-          </defs>
-          <path
-            className="dark:hidden"
-            d="M0,20 Q720,40 1440,20 L1440,40 L0,40 Z"
-            fill="url(#services-light-gradient)"
-          />
-          <path
-            className="hidden dark:block"
-            d="M0,20 Q720,40 1440,20 L1440,40 L0,40 Z"
-            fill="url(#services-dark-gradient)"
-          />
-        </svg>
-      </div>
-
       {/* Premium floating elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Large ambient glow */}
@@ -160,7 +206,7 @@ export default function LiquidGlassServices() {
         <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 bg-indigo-400/25 dark:bg-indigo-400/12 rounded-full animate-pulse" style={{animationDelay: '7s'}}></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 ${hasTopBlur ? 'pt-32' : 'pt-24'} ${hasBottomBlur ? 'pb-32' : 'pb-24'}`}>
         {/* Header */}
         <div className="text-center mb-20">
           <h2 className="text-5xl md:text-6xl font-bold mb-6 text-center">
@@ -264,33 +310,74 @@ export default function LiquidGlassServices() {
         </div>
       </div>
 
-      {/* Enhanced Bottom Separator */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none" aria-hidden="true">
-        <svg className="w-full h-16 md:h-24" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="services-bottom-light" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#FFFFFF" />
-              <stop offset="0.5" stopColor="#F8FAFC" />
-              <stop offset="1" stopColor="#E2E8F0" />
-            </linearGradient>
-            <linearGradient id="services-bottom-dark" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#334155" />
-              <stop offset="0.5" stopColor="#1E293B" />
-              <stop offset="1" stopColor="#0F172A" />
-            </linearGradient>
-          </defs>
-          <path 
-            className="dark:hidden"
-            fill="url(#services-bottom-light)" 
-            d="M0,0 C480,80 960,-80 1440,0 L1440,80 L0,80 Z" 
-          />
-          <path 
-            className="hidden dark:block"
-            fill="url(#services-bottom-dark)" 
-            d="M0,0 C480,80 960,-80 1440,0 L1440,80 L0,80 Z" 
-          />
-        </svg>
-      </div>
+      {/* BOTTOM GLASSMORPHISM BLUR TRANSITION (0% -> 100%) */}
+      {hasBottomBlur && (
+        <div className={`absolute bottom-0 left-0 w-full ${blurHeights[blurHeight]} z-20 pointer-events-none`}>
+          {/* Glassmorphism Blur Gradient - Bottom to Top (0% -> 100%) */}
+          <div className={`absolute inset-0 ${blurIntensities[blurIntensity]} dark:hidden`} 
+               style={{
+                 background: `linear-gradient(to top, 
+                   rgba(255, 255, 255, 0.2) 0%, 
+                   rgba(255, 255, 255, 0.15) 20%, 
+                   rgba(255, 255, 255, 0.1) 40%, 
+                   rgba(255, 255, 255, 0.05) 60%, 
+                   rgba(255, 255, 255, 0.02) 80%, 
+                   rgba(255, 255, 255, 0) 100%)`,
+                 filter: 'var(--tw-backdrop-blur)'
+               }} />
+          
+          <div className={`absolute inset-0 ${blurIntensities[blurIntensity]} hidden dark:block`} 
+               style={{
+                 background: `linear-gradient(to top, 
+                   rgba(15, 23, 42, 0.3) 0%, 
+                   rgba(15, 23, 42, 0.2) 20%, 
+                   rgba(15, 23, 42, 0.15) 40%, 
+                   rgba(15, 23, 42, 0.08) 60%, 
+                   rgba(15, 23, 42, 0.03) 80%, 
+                   rgba(15, 23, 42, 0) 100%)`,
+                 filter: 'var(--tw-backdrop-blur)'
+               }} />
+          
+          {/* Glass reflection overlay - smoother transition */}
+          <div className="absolute inset-0 dark:hidden" 
+               style={{
+                 background: `linear-gradient(to top, 
+                   rgba(255, 255, 255, 0.08) 0%, 
+                   rgba(255, 255, 255, 0.04) 30%, 
+                   rgba(255, 255, 255, 0.02) 60%, 
+                   rgba(255, 255, 255, 0) 100%)`
+               }} />
+          
+          <div className="absolute inset-0 hidden dark:block" 
+               style={{
+                 background: `linear-gradient(to top, 
+                   rgba(51, 65, 85, 0.12) 0%, 
+                   rgba(51, 65, 85, 0.06) 30%, 
+                   rgba(51, 65, 85, 0.03) 60%, 
+                   rgba(51, 65, 85, 0) 100%)`
+               }} />
+          
+          {/* Floating glass particles for extra effect - with proper opacity fade */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute rounded-full backdrop-blur-sm animate-float-gentle"
+                style={{
+                  left: `${15 + (i * 10)}%`,
+                  bottom: `${10 + (i % 2) * 50}%`,
+                  width: `${2 + (i % 3)}px`,
+                  height: `${2 + (i % 3)}px`,
+                  background: `rgba(255, 255, 255, ${0.1 - (i % 2) * 0.05})`,
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: `${4 + (i % 2)}s`,
+                  opacity: 0.6 - (i % 3) * 0.2
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Custom Styles */}
       <style jsx>{`
@@ -301,6 +388,44 @@ export default function LiquidGlassServices() {
         
         .bg-gradient-radial {
           background-image: var(--bg-gradient-radial);
+        }
+        
+        @keyframes slide-up {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-slide-up {
+          animation: slide-up 0.8s ease-out forwards;
+        }
+        
+        @keyframes float-gentle {
+          0%, 100% {
+            transform: translate(0px, 0px) rotate(0deg) scale(1);
+            opacity: 0.3;
+          }
+          25% {
+            transform: translate(-3px, -8px) rotate(90deg) scale(1.2);
+            opacity: 0.6;
+          }
+          50% {
+            transform: translate(2px, -5px) rotate(180deg) scale(0.8);
+            opacity: 0.4;
+          }
+          75% {
+            transform: translate(-1px, -10px) rotate(270deg) scale(1.1);
+            opacity: 0.7;
+          }
+        }
+        
+        .animate-float-gentle {
+          animation: float-gentle 6s ease-in-out infinite;
         }
         
         @keyframes float-slow {

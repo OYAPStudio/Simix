@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { ScrollIndicator } from '@/components/scroll-indicator'
+import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,11 +17,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Simix - Smart Building & Control Systems',
     description: 'Professional control systems and smart building solutions',
-    url: 'https://simix.com',
+    url: 'https://simixiq.com',
     siteName: 'Simix',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/Double-Simix.png',
         width: 1200,
         height: 630,
         alt: 'Simix - Smart Building Solutions',
@@ -59,6 +60,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
+      <Head>
+        <link rel="icon" type="image/png" href="/favicon.png" />
+      </Head>
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

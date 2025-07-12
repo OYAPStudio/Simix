@@ -134,7 +134,19 @@ function FeatureCard({ feature, index }: { feature: string, index: number }) {
   )
 }
 
-export default function ImprovedAboutSection() {
+interface ImprovedAboutSectionProps {
+  hasTopBlur?: boolean
+  hasBottomBlur?: boolean
+  blurHeight?: 'sm' | 'md' | 'lg' | 'xl'
+  blurIntensity?: 'subtle' | 'medium' | 'strong'
+}
+
+export default function ImprovedAboutSection({ 
+  hasTopBlur = false, 
+  hasBottomBlur = false,
+  blurHeight = 'lg',
+  blurIntensity = 'medium'
+}: ImprovedAboutSectionProps) {
   const features = [
     'Advanced PLC & SCADA Programming',
     'Smart Building Automation (KNX)',
@@ -152,8 +164,72 @@ export default function ImprovedAboutSection() {
     { icon: Award, label: 'Years Experience', value: '6+', color: 'from-purple-400 to-violet-500' }
   ]
 
+  // Blur height configurations
+  const blurHeights = {
+    sm: 'h-16',
+    md: 'h-24', 
+    lg: 'h-32',
+    xl: 'h-40'
+  }
+
+  // Blur intensity configurations
+  const blurIntensities = {
+    subtle: 'backdrop-blur-sm',
+    medium: 'backdrop-blur-md', 
+    strong: 'backdrop-blur-lg'
+  }
+
   return (
-    <section className="relative py-12 md:py-16 bg-slate-50 dark:bg-[#0A0E1A] text-gray-900 dark:text-white overflow-hidden">
+    <section className="relative bg-slate-50 dark:bg-[#0A0E1A] text-gray-900 dark:text-white overflow-hidden">
+      
+      {/* TOP GLASSMORPHISM BLUR TRANSITION (100% -> 0%) */}
+      {hasTopBlur && (
+        <div className={`absolute top-0 left-0 w-full ${blurHeights[blurHeight]} z-20 pointer-events-none`}>
+          {/* Glassmorphism Blur Gradient - Top to Bottom (100% -> 0%) */}
+          <div className={`absolute inset-0 ${blurIntensities[blurIntensity]} dark:hidden`} 
+               style={{
+                 background: `linear-gradient(to bottom, 
+                   rgba(248, 250, 252, 0.2) 0%, 
+                   rgba(248, 250, 252, 0.15) 20%, 
+                   rgba(248, 250, 252, 0.1) 40%, 
+                   rgba(248, 250, 252, 0.05) 60%, 
+                   rgba(248, 250, 252, 0.02) 80%, 
+                   rgba(248, 250, 252, 0) 100%)`,
+                 filter: 'var(--tw-backdrop-blur)'
+               }} />
+          
+          <div className={`absolute inset-0 ${blurIntensities[blurIntensity]} hidden dark:block`} 
+               style={{
+                 background: `linear-gradient(to bottom, 
+                   rgba(10, 14, 26, 0.3) 0%, 
+                   rgba(10, 14, 26, 0.2) 20%, 
+                   rgba(10, 14, 26, 0.15) 40%, 
+                   rgba(10, 14, 26, 0.08) 60%, 
+                   rgba(10, 14, 26, 0.03) 80%, 
+                   rgba(10, 14, 26, 0) 100%)`,
+                 filter: 'var(--tw-backdrop-blur)'
+               }} />
+          
+          {/* Glass reflection overlay - smoother transition */}
+          <div className="absolute inset-0 dark:hidden" 
+               style={{
+                 background: `linear-gradient(to bottom, 
+                   rgba(255, 255, 255, 0.08) 0%, 
+                   rgba(255, 255, 255, 0.04) 30%, 
+                   rgba(255, 255, 255, 0.02) 60%, 
+                   rgba(255, 255, 255, 0) 100%)`
+               }} />
+          
+          <div className="absolute inset-0 hidden dark:block" 
+               style={{
+                 background: `linear-gradient(to bottom, 
+                   rgba(51, 65, 85, 0.12) 0%, 
+                   rgba(51, 65, 85, 0.06) 30%, 
+                   rgba(51, 65, 85, 0.03) 60%, 
+                   rgba(51, 65, 85, 0) 100%)`
+               }} />
+        </div>
+      )}
       
       {/* Ambient Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -164,7 +240,7 @@ export default function ImprovedAboutSection() {
         <div className="absolute bottom-40 left-1/4 w-56 h-56 bg-pink-500/8 dark:bg-pink-500/15 rounded-full blur-3xl animate-pulse" style={{animationDelay: '8s'}}></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 ${hasTopBlur ? 'pt-32' : 'pt-12'} ${hasBottomBlur ? 'pb-32' : 'pb-16'} md:py-16`}>
         
         {/* Header Section - Vertical Stack Layout */}
         <motion.div
@@ -403,8 +479,6 @@ export default function ImprovedAboutSection() {
                       </span>
                     </div>
                     
-                    
-                    
                     {/* Company info */}
                     <div className="space-y-2 mt-4">
                       <div className="text-xs md:text-sm text-white/90 dark:text-white/90 leading-relaxed max-w-xs mx-auto">
@@ -428,6 +502,75 @@ export default function ImprovedAboutSection() {
         </div>
       </div>
 
+      {/* BOTTOM GLASSMORPHISM BLUR TRANSITION (0% -> 100%) */}
+      {hasBottomBlur && (
+        <div className={`absolute bottom-0 left-0 w-full ${blurHeights[blurHeight]} z-20 pointer-events-none`}>
+          {/* Glassmorphism Blur Gradient - Bottom to Top (0% -> 100%) */}
+          <div className={`absolute inset-0 ${blurIntensities[blurIntensity]} dark:hidden`} 
+               style={{
+                 background: `linear-gradient(to top, 
+                   rgba(248, 250, 252, 0.2) 0%, 
+                   rgba(248, 250, 252, 0.15) 20%, 
+                   rgba(248, 250, 252, 0.1) 40%, 
+                   rgba(248, 250, 252, 0.05) 60%, 
+                   rgba(248, 250, 252, 0.02) 80%, 
+                   rgba(248, 250, 252, 0) 100%)`,
+                 filter: 'var(--tw-backdrop-blur)'
+               }} />
+          
+          <div className={`absolute inset-0 ${blurIntensities[blurIntensity]} hidden dark:block`} 
+               style={{
+                 background: `linear-gradient(to top, 
+                   rgba(10, 14, 26, 0.3) 0%, 
+                   rgba(10, 14, 26, 0.2) 20%, 
+                   rgba(10, 14, 26, 0.15) 40%, 
+                   rgba(10, 14, 26, 0.08) 60%, 
+                   rgba(10, 14, 26, 0.03) 80%, 
+                   rgba(10, 14, 26, 0) 100%)`,
+                 filter: 'var(--tw-backdrop-blur)'
+               }} />
+          
+          {/* Glass reflection overlay - smoother transition */}
+          <div className="absolute inset-0 dark:hidden" 
+               style={{
+                 background: `linear-gradient(to top, 
+                   rgba(255, 255, 255, 0.08) 0%, 
+                   rgba(255, 255, 255, 0.04) 30%, 
+                   rgba(255, 255, 255, 0.02) 60%, 
+                   rgba(255, 255, 255, 0) 100%)`
+               }} />
+          
+          <div className="absolute inset-0 hidden dark:block" 
+               style={{
+                 background: `linear-gradient(to top, 
+                   rgba(51, 65, 85, 0.12) 0%, 
+                   rgba(51, 65, 85, 0.06) 30%, 
+                   rgba(51, 65, 85, 0.03) 60%, 
+                   rgba(51, 65, 85, 0) 100%)`
+               }} />
+          
+          {/* Floating glass particles for extra effect - with proper opacity fade */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute rounded-full backdrop-blur-sm animate-float-gentle"
+                style={{
+                  left: `${15 + (i * 10)}%`,
+                  bottom: `${10 + (i % 2) * 50}%`,
+                  width: `${2 + (i % 3)}px`,
+                  height: `${2 + (i % 3)}px`,
+                  background: `rgba(255, 255, 255, ${0.1 - (i % 2) * 0.05})`,
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: `${4 + (i % 2)}s`,
+                  opacity: 0.6 - (i % 3) * 0.2
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Revolutionary Custom Styles */}
       <style jsx>{`
         .shadow-3xl {
@@ -435,6 +578,29 @@ export default function ImprovedAboutSection() {
         }
         .bg-radial-gradient {
           background: radial-gradient(circle at center, var(--tw-gradient-stops));
+        }
+        
+        @keyframes float-gentle {
+          0%, 100% {
+            transform: translate(0px, 0px) rotate(0deg) scale(1);
+            opacity: 0.3;
+          }
+          25% {
+            transform: translate(-3px, -8px) rotate(90deg) scale(1.2);
+            opacity: 0.6;
+          }
+          50% {
+            transform: translate(2px, -5px) rotate(180deg) scale(0.8);
+            opacity: 0.4;
+          }
+          75% {
+            transform: translate(-1px, -10px) rotate(270deg) scale(1.1);
+            opacity: 0.7;
+          }
+        }
+        
+        .animate-float-gentle {
+          animation: float-gentle 6s ease-in-out infinite;
         }
         
         @keyframes float-particle-0 {
