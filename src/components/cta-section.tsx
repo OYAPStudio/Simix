@@ -71,8 +71,8 @@ export function CTASection({
       icon: Phone,
       title: 'Call Now',
       description: 'Speak directly with our experts for immediate assistance and consultation.',
-      button: 'Call +964 771 088 2275',
-      href: 'tel:+964 771 088 2275',
+      button: 'Call +964 776 405 0601',
+      href: 'tel:+964 776 405 0601',
       color: 'from-green-400 to-green-600'
     }
   ]
