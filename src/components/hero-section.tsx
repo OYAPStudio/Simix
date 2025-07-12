@@ -174,7 +174,7 @@ export function HeroSection() {
   }, [])
 
   return (
-    <div ref={containerRef} className="relative bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900">
+    <div ref={containerRef} className="relative bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900">
       <div ref={heroRef} className="relative h-screen overflow-hidden">
         
         {/* Remove old background div, as the gradient is now on the container */}
@@ -342,13 +342,6 @@ export function HeroSection() {
         </div>
 
         {/* Progress Indicator */}
-        <div className="absolute top-4 right-4 w-1 h-20 bg-white/20 rounded-full overflow-hidden">
-          <div 
-            className="w-full bg-gradient-to-b from-white to-white/60 rounded-full transition-all duration-300"
-            style={{ height: '0%' }}
-            id="progress-bar"
-          />
-        </div>
       </div> {/* End of heroRef main content */}
       {/* Glass Wave Separator - simple but powerful */}
       <div className="w-full overflow-hidden" aria-hidden="true">

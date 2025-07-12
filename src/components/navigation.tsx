@@ -44,20 +44,21 @@ export function Navigation() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
+        <div className="flex justify-between items-center h-16 md:h-20 ">
           {/* Enhanced Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative"
-            >
+          <Link href="/" className="flex items-center space-x-3 group scale-150">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative -ml-4 w-[90px] h-[90px] overflow-hidden "
+            style={{ clipPath: 'inset(30% 0% 30% 0%)' }}
+          >
               <Image
-                src="/logo.png"
+                src="/Simix-Logo.png"
                 alt="Simix Logo"
-                width={40}
-                height={40}
-                className="w-12 h-12 md:w-10 md:h-10 object-contain drop-shadow-lg"
+                width={150}
+                height={150}
+                className="w-30  h-30 md:w-25 md:h-25 object-contain drop-shadow-lg "
                 priority
               />
               {/* Fallback Logo */}
@@ -65,12 +66,12 @@ export function Navigation() {
                 <Zap className="w-5 h-5 md:w-6 md:h-6 text-white" />
               </div>
             </motion.div>
-            <motion.span 
+            {/* <motion.span 
               whileHover={{ scale: 1.02 }}
               className="text-xl md:text-2xl font-black text-gray-900 dark:text-white tracking-wider group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300"
             >
               SIMIX
-            </motion.span>
+            </motion.span> */}
           </Link>
 
           {/* Enhanced Desktop Navigation */}
