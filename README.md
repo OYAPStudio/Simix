@@ -186,3 +186,5 @@ This project is proprietary and confidential. All rights reserved by Simix.
 ---
 
 Built with ❤️ by the Simix Team
+
+لحلول الطاقة والانظة السيرة الذكية

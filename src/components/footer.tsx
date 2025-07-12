@@ -161,20 +161,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="bg-gray-800 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-400">
-            <div>
-              Built with ❤️ by Simix Team
-            </div>
-            <div className="mt-2 sm:mt-0">
-              <Link href="/privacy" className="hover:text-white mr-4">Privacy</Link>
-              <Link href="/terms" className="hover:text-white">Terms</Link>
-            </div>
-          </div>
-        </div>
-      </div>
     </footer>
   )
 }

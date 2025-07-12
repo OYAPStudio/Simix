@@ -192,20 +192,21 @@ export function HeroSection() {
         />
 
         {/* Main Content - PROPERLY CENTERED */}
-        <div className="relative z-10 h-full flex items-center justify-center pt-12 pb-16 sm:pt-0 sm:pb-0">
+        <div className="relative z-10 h-full flex items-center justify-center pt-12 pb-16 sm:pt-0 sm:pb-0 ">
           <div className="text-center px-4 sm:px-6 w-full max-w-4xl mx-auto">
             
             {/* Enhanced Logo - Reduced size for mobile */}
-            <div ref={logoRef} className="mt-0 mb-0 will-change-transform">
-              <div className="inline-flex items-center justify-center">
+            <div ref={logoRef} className="sm:mt-[40px] sm:-mb-[400px] md:mt-40 md:-mb-40 will-change-transform">
+              <div className="inline-flex items-center justify-center mb-12 scale-150">
                 <Image
-                  src="/logo.png"
+                  src="/Double-Simix.png"
                   alt="Simix Logo"
-                  width={260}
-                  height={260}
-                  className="w-32 h-32 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem]"
+                  width={200}
+                  height={200}
+                  className=" w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-96 lg:h-96"
                   style={{
                     filter: 'drop-shadow(0 0 20px rgba(95,125,183,0.5))',
+                    clipPath: 'inset(30% 0% 30% 0%)'
                   }}
                   onError={(e) => {
                     e.currentTarget.style.display = 'none'
@@ -221,7 +222,7 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* Main Title */}
+            {/* Main Title
             <h1 
               ref={titleRef}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-1 -mt-18 md:-mt-18 tracking-tight leading-tight will-change-transform"
@@ -234,7 +235,7 @@ export function HeroSection() {
               }}
             >
               SIMIX
-            </h1>
+            </h1> */}
 
             {/* Subtitle */}
             <h2 

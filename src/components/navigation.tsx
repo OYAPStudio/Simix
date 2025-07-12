@@ -50,7 +50,7 @@ export function Navigation() {
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="relative -ml-4 w-[90px] h-[90px] overflow-hidden "
+            className="relative -ml-4 -mr-20 w-[90px] h-[90px] overflow-hidden "
             style={{ clipPath: 'inset(30% 0% 30% 0%)' }}
           >
               <Image
