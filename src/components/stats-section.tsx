@@ -13,7 +13,7 @@ const stats = [
   },
   {
     icon: Clock,
-    value: '15+',
+    value: '6+',
     label: 'Years Experience',
     description: 'Industry expertise and knowledge',
     color: 'from-green-400 to-emerald-500'

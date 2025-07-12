@@ -149,7 +149,7 @@ export default function ImprovedAboutSection() {
   const stats = [
     { icon: Target, label: 'Projects Completed', value: '500+', color: 'from-blue-400 to-cyan-500' },
     { icon: Users, label: 'Happy Clients', value: '200+', color: 'from-green-400 to-emerald-500' },
-    { icon: Award, label: 'Years Experience', value: '15+', color: 'from-purple-400 to-violet-500' }
+    { icon: Award, label: 'Years Experience', value: '6+', color: 'from-purple-400 to-violet-500' }
   ]
 
   return (
