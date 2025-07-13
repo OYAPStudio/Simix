@@ -11,8 +11,8 @@ import Head from 'next/head';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Simix - Smart Building & Control Systems',
-  description: 'Simix specializes in classic and programmed control systems, building management systems, and smart buildings - ATS, STAR DELTA, VFD, PLC, HMI, SCADA, DCS, BMS, Smart Home, KNX System, AutoCAD Electrical, and EPLAN.',
+  title: 'Simix - Energy Solutions & Smart Control Systems',
+  description: 'SIMIX For Energy Solutions and Smart Control Systems',
   keywords: 'PLC, SCADA, BMS, Smart Home, KNX, AutoCAD, EPLAN, Control Systems, Building Management',
   authors: [{ name: 'Simix Team' }],
   openGraph: {
