@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Simix Team' }],
   openGraph: {
     title: 'Simix - Smart Building & Control Systems',
-    description: 'Professional control systems and smart building solutions',
+    description: 'SIMIX For Energy Solutions and Smart Control Systems',
     url: 'https://simixiq.com',
     siteName: 'Simix',
     images: [
