@@ -5,6 +5,7 @@ import { CheckCircle, Target, Users, Award } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 // Count-up animation hook
 function useCountUp(end: number, duration: number = 2000) {
@@ -106,6 +107,8 @@ function StatCard({ stat, index }: { stat: any, index: number }) {
 
 // Feature Card Component
 function FeatureCard({ feature, index }: { feature: string, index: number }) {
+  const { language } = useTranslation()
+  
   return (
     <motion.div
       initial={{ opacity: 0, x: -30, scale: 0.95 }}
@@ -125,7 +128,7 @@ function FeatureCard({ feature, index }: { feature: string, index: number }) {
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
       
       <div className="relative flex items-center z-10">
-        <CheckCircle className="w-5 h-5 text-green-400 mr-3 flex-shrink-0 drop-shadow-lg" />
+        <CheckCircle className={`w-5 h-5 text-green-400 ${language === 'ar' ? 'ml-3' : 'mr-3'} flex-shrink-0 drop-shadow-lg`} />
         <span className="text-gray-900 dark:text-white/90 transition-colors duration-300 font-medium">
           {feature}
         </span>
@@ -147,21 +150,23 @@ export default function ImprovedAboutSection({
   blurHeight = 'lg',
   blurIntensity = 'medium'
 }: ImprovedAboutSectionProps) {
+  const { t, language } = useTranslation()
+
   const features = [
-    'Advanced PLC & SCADA Programming',
-    'Smart Building Automation (KNX)',
-    'Building Management Systems (BMS)',
-    'Control Panel Design & Manufacturing',
-    'AutoCAD Electrical & EPLAN Design',
-    'Industrial Process Control',
-    'VFD & Motor Control Systems',
-    '24/7 Technical Support'
+    t('about.features.plcScada'),
+    t('about.features.smartBuilding'),
+    t('about.features.bms'),
+    t('about.features.controlPanel'),
+    t('about.features.autocadEplan'),
+    t('about.features.processControl'),
+    t('about.features.vfdMotor'),
+    t('about.features.support')
   ]
 
   const stats = [
-    { icon: Target, label: 'Projects Completed', value: '500+', color: 'from-blue-400 to-cyan-500' },
-    { icon: Users, label: 'Happy Clients', value: '200+', color: 'from-green-400 to-emerald-500' },
-    { icon: Award, label: 'Years Experience', value: '6+', color: 'from-purple-400 to-violet-500' }
+    { icon: Target, label: t('about.stats.projects'), value: '500+', color: 'from-blue-400 to-cyan-500' },
+    { icon: Users, label: t('about.stats.clients'), value: '200+', color: 'from-green-400 to-emerald-500' },
+    { icon: Award, label: t('about.stats.experience'), value: '6+', color: 'from-purple-400 to-violet-500' }
   ]
 
   // Blur height configurations
@@ -180,7 +185,7 @@ export default function ImprovedAboutSection({
   }
 
   return (
-    <section className="relative bg-slate-50 dark:bg-[#0A0E1A] text-gray-900 dark:text-white overflow-hidden">
+    <section className="relative bg-slate-50 dark:bg-[#0A0E1A] text-gray-900 dark:text-white overflow-hidden" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       
       {/* TOP GLASSMORPHISM BLUR TRANSITION (100% -> 0%) */}
       {hasTopBlur && (
@@ -251,7 +256,7 @@ export default function ImprovedAboutSection({
         >
           {/* About Title */}
           <h2 className="text-10xl md:text-10xl lg:text-7xl font-black tracking-wide bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent -mb-10 md:-mb-20">
-            About
+            {t('about.title')}
           </h2>
           
           {/* Large Simix Logo */}
@@ -299,9 +304,7 @@ export default function ImprovedAboutSection({
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-3xl"></div>
                 
                 <p className="relative text-lg md:text-xl text-gray-900 dark:text-white/90 leading-relaxed z-10">
-                  Simix is a team specialized in classic and programmed control systems,
-                  building management systems, and smart buildings. We deliver cutting-edge
-                  solutions for industrial automation and smart infrastructure.
+                  {t('about.description.main')}
                 </p>
               </div>
               
@@ -310,9 +313,7 @@ export default function ImprovedAboutSection({
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-3xl"></div>
                 
                 <p className="relative text-base md:text-lg text-gray-800 dark:text-white/75 leading-relaxed z-10">
-                  Our expertise spans across ATS, STAR DELTA, VFD, PLC, HMI, SCADA, DCS,
-                  BMS, Smart Home, KNX System, AutoCAD Electrical, and EPLAN technologies,
-                  ensuring comprehensive solutions for all your automation needs.
+                  {t('about.description.expertise')}
                 </p>
               </div>
             </motion.div>
@@ -337,7 +338,7 @@ export default function ImprovedAboutSection({
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                 <div className="absolute top-2 left-4 w-8 h-4 bg-white/30 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                <span className="relative z-10">Learn More About Us</span>
+                <span className="relative z-10">{t('about.learnMore')}</span>
               </Link>
             </motion.div>
           </div>
@@ -469,23 +470,23 @@ export default function ImprovedAboutSection({
                   >
                     {/* Subtitle with elegant styling */}
                     <div className="text-lg md:text-xl font-semibold text-gray-800 dark:text-white/90 group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-500 tracking-wide">
-                      Smart Solutions
+                      {t('about.card.subtitle')}
                     </div>
                     
                     {/* Experience badge with premium design */}
                     <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 border border-blue-400/20 rounded-full backdrop-blur-sm group-hover:border-blue-400/40 group-hover:bg-gradient-to-r group-hover:from-blue-500/20 group-hover:via-purple-500/20 group-hover:to-cyan-500/20 transition-all duration-500">
                       <span className="text-sm font-medium text-white dark:text-white">
-                        Experience 5-6 Years in the field
+                        {t('about.card.experience')}
                       </span>
                     </div>
                     
                     {/* Company info */}
                     <div className="space-y-2 mt-4">
                       <div className="text-xs md:text-sm text-white/90 dark:text-white/90 leading-relaxed max-w-xs mx-auto">
-                        Specialized in industrial automation, building management systems, and smart infrastructure solutions
+                        {t('about.card.specialization')}
                       </div>
                       <div className="text-xs md:text-sm text-white/80 dark:text-white/80 leading-relaxed max-w-xs mx-auto">
-                        Delivering cutting-edge PLC, SCADA, KNX, and BMS technologies
+                        {t('about.card.technologies')}
                       </div>
                     </div>
                   </motion.div>

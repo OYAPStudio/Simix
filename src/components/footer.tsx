@@ -1,28 +1,32 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 export function Footer() {
+  const { t, language } = useTranslation()
   const currentYear = new Date().getFullYear()
 
   const navigation = {
     company: [
-      { name: 'About Us', href: '/about' },
-      { name: 'Services', href: '/services' },
-      { name: 'Projects', href: '/projects' },
-      { name: 'Contact', href: '/contact' },
+      { name: t('footer.company.about'), href: '/about' },
+      { name: t('footer.company.services'), href: '/services' },
+      { name: t('footer.company.projects'), href: '/projects' },
+      { name: t('footer.company.contact'), href: '/contact' },
     ],
     services: [
-      { name: 'PLC Programming', href: '/services#plc' },
-      { name: 'Smart Buildings', href: '/services#smart-buildings' },
-      { name: 'SCADA Systems', href: '/services#scada' },
-      { name: 'Control Panels', href: '/services#control-panels' },
+      { name: t('footer.services.plc'), href: '/services#plc' },
+      { name: t('footer.services.smart'), href: '/services#smart-buildings' },
+      { name: t('footer.services.scada'), href: '/services#scada' },
+      { name: t('footer.services.control'), href: '/services#control-panels' },
     ],
     support: [
-      { name: 'Documentation', href: '/docs' },
-      { name: 'Support Center', href: '/support' },
-      { name: 'Privacy Policy', href: '/privacy' },
-      { name: 'Terms of Service', href: '/terms' },
+      { name: t('footer.support.docs'), href: '/docs' },
+      { name: t('footer.support.center'), href: '/support' },
+      { name: t('footer.support.privacy'), href: '/privacy' },
+      { name: t('footer.support.terms'), href: '/terms' },
     ],
   }
 
@@ -34,7 +38,7 @@ export function Footer() {
   ]
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
@@ -51,34 +55,32 @@ export function Footer() {
             </Link>
             
             <p className="text-gray-300 mb-6 leading-relaxed max-w-md">
-              Specialized in classic and programmed control systems, building management 
-              systems, and smart buildings. We deliver cutting-edge automation solutions 
-              for modern industry.
+              {t('footer.description')}
             </p>
 
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center text-gray-300">
-                <Mail className="w-5 h-5 mr-3 text-primary-light" />
+                <Mail className={`w-5 h-5 ${language === 'ar' ? 'ml-3' : 'mr-3'} text-primary-light`} />
                 <a href="mailto:info@simixiq.com" className="hover:text-white transition-colors">
                   info@simixiq.com
                 </a>
               </div>
               <div className="flex items-center text-gray-300">
-                <Phone className="w-5 h-5 mr-3 text-primary-light" />
+                <Phone className={`w-5 h-5 ${language === 'ar' ? 'ml-3' : 'mr-3'} text-primary-light`} />
                 <a href="tel:+9647764050601" className="hover:text-white transition-colors">
                   +964 776 405 0601
                 </a>
               </div>
               <div className="flex items-center text-gray-300">
-                <MapPin className="w-5 h-5 mr-3 text-primary-light" />
+                <MapPin className={`w-5 h-5 ${language === 'ar' ? 'ml-3' : 'mr-3'} text-primary-light`} />
                 <a 
                   href="https://maps.google.com/?q=Mosul,Iraq" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
                 >
-                  Iraq Mosul
+                  {t('footer.location')}
                 </a>
               </div>
             </div>
@@ -86,7 +88,7 @@ export function Footer() {
 
           {/* Company Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Company</h3>
+            <h3 className="text-lg font-semibold mb-6">{t('footer.sections.company')}</h3>
             <ul className="space-y-3">
               {navigation.company.map((item) => (
                 <li key={item.name}>
@@ -103,7 +105,7 @@ export function Footer() {
 
           {/* Services Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Services</h3>
+            <h3 className="text-lg font-semibold mb-6">{t('footer.sections.services')}</h3>
             <ul className="space-y-3">
               {navigation.services.map((item) => (
                 <li key={item.name}>
@@ -120,7 +122,7 @@ export function Footer() {
 
           {/* Support Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-6">Support</h3>
+            <h3 className="text-lg font-semibold mb-6">{t('footer.sections.support')}</h3>
             <ul className="space-y-3">
               {navigation.support.map((item) => (
                 <li key={item.name}>
@@ -141,7 +143,7 @@ export function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             {/* Copyright */}
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © {currentYear} Simix. All rights reserved.
+              {t('footer.copyright').replace('{year}', currentYear.toString())}
             </div>
 
             {/* Social Links */}

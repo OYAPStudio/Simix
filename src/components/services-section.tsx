@@ -12,51 +12,7 @@ import {
   ChevronRight
 } from 'lucide-react'
 import Link from 'next/link'
-
-const services = [
-  {
-    icon: Settings,
-    title: 'PLC Programming',
-    description: 'Advanced programmable logic controller systems for industrial automation and process control.',
-    features: ['HMI Integration', 'SCADA Systems', 'Process Optimization'],
-    color: 'from-blue-400 to-blue-600'
-  },
-  {
-    icon: Home,
-    title: 'Smart Buildings',
-    description: 'Complete building management systems with integrated KNX automation for modern smart buildings.',
-    features: ['KNX Systems', 'Building Automation', 'Energy Management'],
-    color: 'from-green-400 to-green-600'
-  },
-  {
-    icon: Cpu,
-    title: 'Control Panels',
-    description: 'Custom control panel design and manufacturing for ATS, STAR DELTA, and VFD applications.',
-    features: ['ATS Systems', 'STAR DELTA', 'VFD Controls'],
-    color: 'from-purple-400 to-purple-600'
-  },
-  {
-    icon: MonitorSpeaker,
-    title: 'SCADA & DCS',
-    description: 'Supervisory control and data acquisition systems for real-time monitoring and control.',
-    features: ['Real-time Monitoring', 'Data Analytics', 'Remote Control'],
-    color: 'from-orange-400 to-orange-500'
-  },
-  {
-    icon: Zap,
-    title: 'Solar Panel Systems',
-    description: 'Complete solar energy solutions including design, installation, and monitoring for sustainable power generation and energy efficiency.',
-    features: ['Solar Design', 'Installation', 'Power Monitoring'],
-    color: 'from-yellow-400 to-orange-500'
-  },
-  {
-    icon: Wrench,
-    title: 'Maintenance & Support',
-    description: 'Comprehensive maintenance and technical support for all installed systems and equipment.',
-    features: ['24/7 Support', 'Preventive Maintenance', 'System Upgrades'],
-    color: 'from-indigo-400 to-indigo-600'
-  }
-]
+import { useTranslation } from '@/contexts/TranslationContext'
 
 interface LiquidGlassServicesProps {
   hasTopBlur?: boolean
@@ -71,8 +27,54 @@ export default function LiquidGlassServices({
   blurHeight = 'lg',
   blurIntensity = 'medium'
 }: LiquidGlassServicesProps) {
+  const { t, language } = useTranslation()
   const [mounted, setMounted] = useState(false)
   const [visibleItems, setVisibleItems] = useState<number[]>([])
+
+  const services = [
+    {
+      icon: Settings,
+      title: t('services.plc.title'),
+      description: t('services.plc.description'),
+      features: [t('services.plc.features.hmi'), t('services.plc.features.scada'), t('services.plc.features.optimization')],
+      color: 'from-blue-400 to-blue-600'
+    },
+    {
+      icon: Home,
+      title: t('services.smart.title'),
+      description: t('services.smart.description'),
+      features: [t('services.smart.features.knx'), t('services.smart.features.automation'), t('services.smart.features.energy')],
+      color: 'from-green-400 to-green-600'
+    },
+    {
+      icon: Cpu,
+      title: t('services.control.title'),
+      description: t('services.control.description'),
+      features: [t('services.control.features.ats'), t('services.control.features.star'), t('services.control.features.vfd')],
+      color: 'from-purple-400 to-purple-600'
+    },
+    {
+      icon: MonitorSpeaker,
+      title: t('services.scada.title'),
+      description: t('services.scada.description'),
+      features: [t('services.scada.features.monitoring'), t('services.scada.features.analytics'), t('services.scada.features.remote')],
+      color: 'from-orange-400 to-orange-500'
+    },
+    {
+      icon: Zap,
+      title: t('services.solar.title'),
+      description: t('services.solar.description'),
+      features: [t('services.solar.features.design'), t('services.solar.features.installation'), t('services.solar.features.monitoring')],
+      color: 'from-yellow-400 to-orange-500'
+    },
+    {
+      icon: Wrench,
+      title: t('services.maintenance.title'),
+      description: t('services.maintenance.description'),
+      features: [t('services.maintenance.features.support'), t('services.maintenance.features.preventive'), t('services.maintenance.features.upgrades')],
+      color: 'from-indigo-400 to-indigo-600'
+    }
+  ]
 
   useEffect(() => {
     setMounted(true)
@@ -112,7 +114,7 @@ export default function LiquidGlassServices({
   }
 
   return (
-    <section className="relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 min-h-screen overflow-hidden">
+    <section className="relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 min-h-screen overflow-hidden" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       
       {/* TOP GLASSMORPHISM BLUR TRANSITION (100% -> 0%) */}
       {hasTopBlur && (
@@ -210,10 +212,10 @@ export default function LiquidGlassServices({
         {/* Header */}
         <div className="text-center mb-20">
           <h2 className="text-5xl md:text-6xl font-bold mb-6 text-center">
-            <span className="text-gray-900 dark:text-white">Our</span> <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-300 dark:via-purple-300 dark:to-pink-300 bg-clip-text text-transparent">Services</span>
+            <span className="text-gray-900 dark:text-white">{t('services.header.our')}</span> <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-300 dark:via-purple-300 dark:to-pink-300 bg-clip-text text-transparent">{t('services.header.services')}</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Comprehensive solutions for industrial automation, smart buildings, and control systems
+            {t('services.header.description')}
           </p>
         </div>
 
@@ -277,7 +279,7 @@ export default function LiquidGlassServices({
                   <div className="flex flex-wrap gap-2 mb-6">
                     {service.features.map((feature, featureIndex) => (
                       <span key={featureIndex} className="inline-flex items-center px-3 py-1 backdrop-blur-sm bg-gray-100/80 dark:bg-slate-700/60 border border-gray-300/60 dark:border-slate-600/60 rounded-full text-xs font-medium text-gray-800 dark:text-slate-200 transition-all duration-300">
-                        <ChevronRight className="w-3 h-3 mr-1" />
+                        <ChevronRight className={`w-3 h-3 ${language === 'ar' ? 'ml-1 rotate-180' : 'mr-1'}`} />
                         {feature}
                       </span>
                     ))}
@@ -289,8 +291,8 @@ export default function LiquidGlassServices({
                     className="inline-flex items-center px-4 py-2 backdrop-blur-sm bg-gray-100/70 dark:bg-slate-700/50 border border-gray-300/70 dark:border-slate-600/60 hover:border-blue-400 dark:hover:border-blue-400 rounded-full text-gray-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                     tabIndex={0}
                   >
-                    Learn More
-                    <ArrowRight className="w-4 h-4 ml-1 transition-transform duration-200" />
+                    {t('services.learnMore')}
+                    <ArrowRight className={`w-4 h-4 ${language === 'ar' ? 'mr-1 rotate-180' : 'ml-1'} transition-transform duration-200`} />
                   </Link>
                 </div>
               </div>
@@ -304,8 +306,8 @@ export default function LiquidGlassServices({
             href="/services"
             className="inline-flex items-center px-8 py-4 backdrop-blur-sm bg-gray-50/90 dark:bg-slate-800/60 border-2 border-gray-300/80 dark:border-slate-600/60 hover:border-blue-400 dark:hover:border-blue-400 rounded-full text-gray-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-all duration-300 shadow-lg hover:shadow-[0_20px_40px_-12px_rgba(59,130,246,0.3)] group hover:scale-105"
           >
-            <span>View All Services</span>
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+            <span>{t('services.viewAll')}</span>
+            <ArrowRight className={`${language === 'ar' ? 'mr-2 rotate-180' : 'ml-2'} w-5 h-5 group-hover:translate-x-1 transition-transform duration-200`} />
           </Link>
         </div>
       </div>

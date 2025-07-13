@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Settings, Home, Cpu, Zap, ChevronDown } from 'lucide-react'
 import Image from 'next/image'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -12,6 +13,7 @@ if (typeof window !== 'undefined') {
 }
 
 export function HeroSection() {
+  const { t, language } = useTranslation()
   const containerRef = useRef<HTMLDivElement>(null)
   const heroRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
@@ -46,9 +48,9 @@ export function HeroSection() {
 
     // Text content array for smooth transitions
     const textContent = [
-      "Leading provider of industrial control systems, smart building solutions, and automation technologies",
-      "Transforming industries with cutting-edge automation solutions and intelligent control systems",
-      "Your trusted partner in industrial automation and smart technology integration"
+      t('hero.description1'),
+      t('hero.description2'),
+      t('hero.description3')
     ]
     let currentTextIndex = 0
 
@@ -171,10 +173,10 @@ export function HeroSection() {
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())
     }
-  }, [])
+  }, [t])
 
   return (
-    <div ref={containerRef} className="relative bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900">
+    <div ref={containerRef} className="relative bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <div ref={heroRef} className="relative h-screen overflow-hidden">
         
         {/* Remove old background div, as the gradient is now on the container */}
@@ -242,11 +244,11 @@ export function HeroSection() {
               ref={subtitleRef}
               className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-white/90 mb-0 tracking-wide will-change-transform"
             >
-              Engineering Excellence
+              {t('hero.subtitle')}
             </h2>
 
             <h3 className="text-sm sm:text-base md:text-lg font-extralight text-white/70 mb-2 tracking-widest">
-              in Automation
+              {t('hero.subtitle2')}
             </h3>
 
             {/* Clean Description */}
@@ -254,7 +256,7 @@ export function HeroSection() {
               ref={descriptionRef}
               className="text-sm sm:text-sm md:text-base text-white/80 mb-4 max-w-xs sm:max-w-2xl mx-auto leading-snug px-2 sm:px-0 will-change-transform"
             >
-              Leading provider of industrial control systems, smart building solutions, and automation technologies
+              {t('hero.description1')}
             </p>
 
             {/* Service Badges - Enhanced Mobile Layout */}
@@ -265,9 +267,9 @@ export function HeroSection() {
               {/* Top Row - 3 badges */}
               <div className="flex flex-wrap justify-center gap-2 mb-2">
                 {[
-                  { icon: Settings, label: 'PLC & SCADA', color: '#60A5FA' },
-                  { icon: Home, label: 'Smart Buildings', color: '#34D399' },
-                  { icon: Cpu, label: 'BMS Systems', color: '#A78BFA' },
+                  { icon: Settings, label: t('hero.badges.plc'), color: '#60A5FA' },
+                  { icon: Home, label: t('hero.badges.smart'), color: '#34D399' },
+                  { icon: Cpu, label: t('hero.badges.bms'), color: '#A78BFA' },
                 ].map((item, index) => (
                   <div 
                     key={index}
@@ -296,7 +298,7 @@ export function HeroSection() {
                     <Zap className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
                   </div>
                   <span className="text-xs sm:text-sm">
-                    KNX Automation
+                    {t('hero.badges.knx')}
                   </span>
                 </div>
               </div>
@@ -312,8 +314,8 @@ export function HeroSection() {
                   href="/services"
                   className="group inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-white text-[#1A1D23] font-bold rounded-xl shadow-xl text-sm sm:text-base transition-all duration-300 hover:scale-105 w-full"
                 >
-                  Explore Services
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  {t('hero.buttons.services')}
+                  <ArrowRight className={`ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 ${language === 'ar' ? 'rotate-180' : ''}`} />
                 </a>
               </div>
               
@@ -322,7 +324,7 @@ export function HeroSection() {
                   href="/contact"
                   className="inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 bg-white/10 border border-white/30 text-white font-bold rounded-xl backdrop-blur-md text-sm sm:text-base hover:bg-white/20 transition-all duration-300 hover:scale-105 w-full"
                 >
-                  Get Started
+                  {t('hero.buttons.contact')}
                 </a>
               </div>
             </div>
@@ -338,7 +340,7 @@ export function HeroSection() {
             <ChevronDown className="w-6 h-6 sm:w-8 sm:h-8 text-white/60 mx-auto mb-2 sm:mb-3" />
           </div>
           <p className="text-white/60 text-xs sm:text-sm font-medium tracking-widest uppercase">
-            Scroll to discover
+            {t('hero.scroll')}
           </p>
         </div>
 
