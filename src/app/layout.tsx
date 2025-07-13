@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { ScrollIndicator } from '@/components/scroll-indicator'
+import { TranslationProvider } from '@/contexts/TranslationContext'
 import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -70,10 +71,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ScrollIndicator />
-          <Navigation />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
+          <TranslationProvider>
+            <ScrollIndicator />
+            <Navigation />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </TranslationProvider>
         </ThemeProvider>
       </body>
     </html>

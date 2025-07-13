@@ -1,124 +1,134 @@
+'use client'
+
 import { Metadata } from 'next'
 import { Calendar, MapPin, Tag, ExternalLink } from 'lucide-react'
+import { useTranslation } from '@/contexts/TranslationContext'
 
-export const metadata: Metadata = {
-  title: 'Projects - Simix',
-  description: 'Explore our portfolio of successful automation projects across various industries.',
-}
-
-const projects = [
-  {
-    id: 1,
-    title: 'Smart Manufacturing Plant Automation',
-    description: 'Complete automation solution for a 50,000 sq ft manufacturing facility including PLC programming, SCADA system, and energy management.',
-    image: '/api/placeholder/600/400',
-    category: 'Industrial Automation',
-    location: 'Detroit, MI',
-    year: '2024',
-    technologies: ['Siemens S7-1500', 'WinCC SCADA', 'KNX', 'Energy Management'],
-    highlights: [
-      '40% reduction in energy consumption',
-      '60% improvement in production efficiency',
-      'Real-time monitoring of 200+ sensors',
-      'Integrated quality control systems'
-    ]
-  },
-  {
-    id: 2,
-    title: 'Corporate Headquarters BMS',
-    description: 'Building management system for a 20-story corporate headquarters with integrated KNX automation, HVAC control, and security systems.',
-    image: '/api/placeholder/600/400',
-    category: 'Smart Buildings',
-    location: 'New York, NY',
-    year: '2023',
-    technologies: ['KNX/EIB', 'BACnet', 'Modbus', 'Building Analytics'],
-    highlights: [
-      '35% reduction in HVAC energy costs',
-      'Centralized control of 500+ devices',
-      'Advanced occupancy detection',
-      'Mobile app for facility management'
-    ]
-  },
-  {
-    id: 3,
-    title: 'Water Treatment Plant SCADA',
-    description: 'Comprehensive SCADA system for municipal water treatment facility with real-time monitoring, automated controls, and regulatory compliance.',
-    image: '/api/placeholder/600/400',
-    category: 'SCADA Systems',
-    location: 'Phoenix, AZ',
-    year: '2023',
-    technologies: ['Wonderware SCADA', 'Allen-Bradley PLCs', 'Historian', 'HMI'],
-    highlights: [
-      '24/7 remote monitoring capabilities',
-      'Automated chemical dosing control',
-      'Compliance with EPA regulations',
-      'Predictive maintenance alerts'
-    ]
-  },
-  {
-    id: 4,
-    title: 'Smart Hospital Infrastructure',
-    description: 'Integrated automation system for a 300-bed hospital including medical gas monitoring, nurse call integration, and emergency power management.',
-    image: '/api/placeholder/600/400',
-    category: 'Healthcare Automation',
-    location: 'Boston, MA',
-    year: '2022',
-    technologies: ['Schneider PLCs', 'KNX', 'BACnet', 'Emergency Systems'],
-    highlights: [
-      'Critical system redundancy',
-      'Integration with nurse call systems',
-      'Medical gas monitoring',
-      'Emergency power automation'
-    ]
-  },
-  {
-    id: 5,
-    title: 'Data Center Infrastructure Management',
-    description: 'Complete DCIM solution for Tier III data center with environmental monitoring, power management, and predictive analytics.',
-    image: '/api/placeholder/600/400',
-    category: 'Data Center',
-    location: 'Austin, TX',
-    year: '2022',
-    technologies: ['Schneider EcoStruxure', 'Modbus TCP', 'SNMP', 'Analytics'],
-    highlights: [
-      '99.99% uptime achievement',
-      'Real-time power and cooling optimization',
-      'Predictive failure detection',
-      'Comprehensive asset tracking'
-    ]
-  },
-  {
-    id: 6,
-    title: 'Smart Retail Chain Automation',
-    description: 'Multi-site automation solution for 50+ retail locations with centralized monitoring, energy management, and security integration.',
-    image: '/api/placeholder/600/400',
-    category: 'Retail Automation',
-    location: 'Multiple Locations',
-    year: '2021',
-    technologies: ['Cloud SCADA', 'IoT Sensors', 'Mobile Apps', 'Analytics'],
-    highlights: [
-      'Centralized monitoring of 50+ stores',
-      '25% reduction in energy costs',
-      'Automated lighting and HVAC control',
-      'Real-time inventory temperature monitoring'
-    ]
-  }
-]
-
-const categories = ['All', 'Industrial Automation', 'Smart Buildings', 'SCADA Systems', 'Healthcare Automation', 'Data Center', 'Retail Automation']
+// Note: metadata will need to be handled differently for client components
+// You might want to move this to a parent server component or use next/head
 
 export default function ProjectsPage() {
+  const { t, language } = useTranslation()
+
+  const projects = [
+    {
+      id: 1,
+      title: t('projectsPage.projects.manufacturing.title'),
+      description: t('projectsPage.projects.manufacturing.description'),
+      image: '/api/placeholder/600/400',
+      category: t('projectsPage.categories.industrial'),
+      location: 'Detroit, MI',
+      year: '2024',
+      technologies: ['Siemens S7-1500', 'WinCC SCADA', 'KNX', t('projectsPage.projects.manufacturing.tech.energy')],
+      highlights: [
+        t('projectsPage.projects.manufacturing.highlights.energy'),
+        t('projectsPage.projects.manufacturing.highlights.efficiency'),
+        t('projectsPage.projects.manufacturing.highlights.sensors'),
+        t('projectsPage.projects.manufacturing.highlights.quality')
+      ]
+    },
+    {
+      id: 2,
+      title: t('projectsPage.projects.headquarters.title'),
+      description: t('projectsPage.projects.headquarters.description'),
+      image: '/api/placeholder/600/400',
+      category: t('projectsPage.categories.smart'),
+      location: 'New York, NY',
+      year: '2023',
+      technologies: ['KNX/EIB', 'BACnet', 'Modbus', t('projectsPage.projects.headquarters.tech.analytics')],
+      highlights: [
+        t('projectsPage.projects.headquarters.highlights.hvac'),
+        t('projectsPage.projects.headquarters.highlights.devices'),
+        t('projectsPage.projects.headquarters.highlights.occupancy'),
+        t('projectsPage.projects.headquarters.highlights.mobile')
+      ]
+    },
+    {
+      id: 3,
+      title: t('projectsPage.projects.water.title'),
+      description: t('projectsPage.projects.water.description'),
+      image: '/api/placeholder/600/400',
+      category: t('projectsPage.categories.scada'),
+      location: 'Phoenix, AZ',
+      year: '2023',
+      technologies: ['Wonderware SCADA', 'Allen-Bradley PLCs', 'Historian', 'HMI'],
+      highlights: [
+        t('projectsPage.projects.water.highlights.monitoring'),
+        t('projectsPage.projects.water.highlights.chemical'),
+        t('projectsPage.projects.water.highlights.compliance'),
+        t('projectsPage.projects.water.highlights.maintenance')
+      ]
+    },
+    {
+      id: 4,
+      title: t('projectsPage.projects.hospital.title'),
+      description: t('projectsPage.projects.hospital.description'),
+      image: '/api/placeholder/600/400',
+      category: t('projectsPage.categories.healthcare'),
+      location: 'Boston, MA',
+      year: '2022',
+      technologies: ['Schneider PLCs', 'KNX', 'BACnet', t('projectsPage.projects.hospital.tech.emergency')],
+      highlights: [
+        t('projectsPage.projects.hospital.highlights.redundancy'),
+        t('projectsPage.projects.hospital.highlights.nurse'),
+        t('projectsPage.projects.hospital.highlights.gas'),
+        t('projectsPage.projects.hospital.highlights.power')
+      ]
+    },
+    {
+      id: 5,
+      title: t('projectsPage.projects.datacenter.title'),
+      description: t('projectsPage.projects.datacenter.description'),
+      image: '/api/placeholder/600/400',
+      category: t('projectsPage.categories.datacenter'),
+      location: 'Austin, TX',
+      year: '2022',
+      technologies: ['Schneider EcoStruxure', 'Modbus TCP', 'SNMP', t('projectsPage.projects.datacenter.tech.analytics')],
+      highlights: [
+        t('projectsPage.projects.datacenter.highlights.uptime'),
+        t('projectsPage.projects.datacenter.highlights.optimization'),
+        t('projectsPage.projects.datacenter.highlights.detection'),
+        t('projectsPage.projects.datacenter.highlights.tracking')
+      ]
+    },
+    {
+      id: 6,
+      title: t('projectsPage.projects.retail.title'),
+      description: t('projectsPage.projects.retail.description'),
+      image: '/api/placeholder/600/400',
+      category: t('projectsPage.categories.retail'),
+      location: t('projectsPage.projects.retail.location'),
+      year: '2021',
+      technologies: [t('projectsPage.projects.retail.tech.cloud'), t('projectsPage.projects.retail.tech.iot'), t('projectsPage.projects.retail.tech.mobile'), t('projectsPage.projects.retail.tech.analytics')],
+      highlights: [
+        t('projectsPage.projects.retail.highlights.monitoring'),
+        t('projectsPage.projects.retail.highlights.energy'),
+        t('projectsPage.projects.retail.highlights.control'),
+        t('projectsPage.projects.retail.highlights.temperature')
+      ]
+    }
+  ]
+
+  const categories = [
+    t('projectsPage.filter.all'),
+    t('projectsPage.categories.industrial'),
+    t('projectsPage.categories.smart'),
+    t('projectsPage.categories.scada'),
+    t('projectsPage.categories.healthcare'),
+    t('projectsPage.categories.datacenter'),
+    t('projectsPage.categories.retail')
+  ]
+
   return (
-    <div className="pt-16">
+    <div className="pt-16" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary-light to-primary-DEFAULT text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Our <span className="text-secondary-light">Projects</span>
+            {t('projectsPage.hero.our')} <span className="text-secondary-light">{t('projectsPage.hero.projects')}</span>
           </h1>
           <p className="text-xl md:text-2xl opacity-90 leading-relaxed">
-            Discover how we've helped organizations across various industries achieve 
-            operational excellence through innovative automation solutions.
+            {t('projectsPage.hero.description')}
           </p>
         </div>
       </section>
@@ -153,7 +163,7 @@ export default function ProjectsPage() {
                   <div className="absolute inset-0 bg-black/20" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-white text-center">
-                      <div className="text-4xl font-bold mb-2">PROJECT</div>
+                      <div className="text-4xl font-bold mb-2">{t('projectsPage.common.project')}</div>
                       <div className="text-xl opacity-80">{project.id.toString().padStart(2, '0')}</div>
                     </div>
                   </div>
@@ -169,11 +179,11 @@ export default function ProjectsPage() {
                   {/* Project Meta */}
                   <div className="flex items-center gap-6 text-sm text-gray-500 dark:text-gray-400 mb-4">
                     <div className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-2" />
+                      <Calendar className={`w-4 h-4 ${language === 'ar' ? 'ml-2' : 'mr-2'}`} />
                       {project.year}
                     </div>
                     <div className="flex items-center">
-                      <MapPin className="w-4 h-4 mr-2" />
+                      <MapPin className={`w-4 h-4 ${language === 'ar' ? 'ml-2' : 'mr-2'}`} />
                       {project.location}
                     </div>
                   </div>
@@ -189,7 +199,7 @@ export default function ProjectsPage() {
                   {/* Technologies */}
                   <div className="mb-6">
                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                      Technologies Used
+                      {t('projectsPage.common.technologies')}
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech, index) => (
@@ -206,12 +216,12 @@ export default function ProjectsPage() {
                   {/* Key Highlights */}
                   <div className="mb-6">
                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                      Key Achievements
+                      {t('projectsPage.common.achievements')}
                     </h4>
                     <ul className="space-y-2">
                       {project.highlights.map((highlight, index) => (
                         <li key={index} className="flex items-start text-sm text-gray-600 dark:text-gray-300">
-                          <div className="w-2 h-2 bg-primary-DEFAULT rounded-full mt-2 mr-3 flex-shrink-0" />
+                          <div className={`w-2 h-2 bg-primary-DEFAULT rounded-full mt-2 ${language === 'ar' ? 'ml-3' : 'mr-3'} flex-shrink-0`} />
                           {highlight}
                         </li>
                       ))}
@@ -220,8 +230,8 @@ export default function ProjectsPage() {
 
                   {/* View Details Button */}
                   <button className="inline-flex items-center text-primary-DEFAULT hover:text-primary-light transition-colors duration-200 font-medium group">
-                    View Case Study
-                    <ExternalLink className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-200" />
+                    {t('projectsPage.common.viewCase')}
+                    <ExternalLink className={`w-4 h-4 ${language === 'ar' ? 'mr-1 rotate-180' : 'ml-1'} group-hover:translate-x-1 transition-transform duration-200`} />
                   </button>
                 </div>
               </div>
@@ -234,23 +244,23 @@ export default function ProjectsPage() {
       <section className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-            Ready to Start Your Project?
+            {t('projectsPage.cta.title')}
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            Let's discuss how we can help you achieve similar results with a custom automation solution.
+            {t('projectsPage.cta.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/contact"
               className="inline-flex items-center justify-center px-8 py-4 bg-primary-DEFAULT hover:bg-primary-light text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
-              Start Your Project
+              {t('projectsPage.cta.start')}
             </a>
             <a
               href="/services"
               className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-primary-DEFAULT text-primary-DEFAULT hover:bg-primary-DEFAULT hover:text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
             >
-              View Our Services
+              {t('projectsPage.cta.services')}
             </a>
           </div>
         </div>

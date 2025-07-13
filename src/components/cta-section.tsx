@@ -4,6 +4,7 @@ import { ArrowRight, Mail, Phone, Zap, Clock, Shield } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 interface CTASectionProps {
   hasTopBlur?: boolean
@@ -18,8 +19,34 @@ export function CTASection({
   blurHeight = 'lg',
   blurIntensity = 'medium'
 }: CTASectionProps) {
+  const { t, language } = useTranslation()
   const [mounted, setMounted] = useState(false)
   const [visibleItems, setVisibleItems] = useState<number[]>([])
+
+  const ctaCards = [
+    {
+      icon: Mail,
+      title: t('cta.quote.title'),
+      description: t('cta.quote.description'),
+      button: t('cta.quote.button'),
+      href: '/contact',
+      color: 'from-blue-400 to-blue-600'
+    },
+    {
+      icon: Phone,
+      title: t('cta.call.title'),
+      description: t('cta.call.description'),
+      button: t('cta.call.button'),
+      href: 'tel:+964 776 405 0601',
+      color: 'from-green-400 to-green-600'
+    }
+  ]
+
+  const quickStats = [
+    { icon: Zap, value: t('cta.stats.consultation.value'), label: t('cta.stats.consultation.label'), color: 'from-yellow-400 to-orange-500' },
+    { icon: Clock, value: t('cta.stats.response.value'), label: t('cta.stats.response.label'), color: 'from-blue-400 to-cyan-500' },
+    { icon: Shield, value: t('cta.stats.satisfaction.value'), label: t('cta.stats.satisfaction.label'), color: 'from-green-400 to-emerald-500' }
+  ]
 
   useEffect(() => {
     setMounted(true)
@@ -58,33 +85,8 @@ export function CTASection({
     strong: 'backdrop-blur-lg'
   }
 
-  const ctaCards = [
-    {
-      icon: Mail,
-      title: 'Get Free Quote',
-      description: 'Tell us about your project and we\'ll provide a detailed quote tailored to your needs.',
-      button: 'Start Project',
-      href: '/contact',
-      color: 'from-blue-400 to-blue-600'
-    },
-    {
-      icon: Phone,
-      title: 'Call Now',
-      description: 'Speak directly with our experts for immediate assistance and consultation.',
-      button: 'Call +964 776 405 0601',
-      href: 'tel:+964 776 405 0601',
-      color: 'from-green-400 to-green-600'
-    }
-  ]
-
-  const quickStats = [
-    { icon: Zap, value: 'Free', label: 'Consultation', color: 'from-yellow-400 to-orange-500' },
-    { icon: Clock, value: '24h', label: 'Response Time', color: 'from-blue-400 to-cyan-500' },
-    { icon: Shield, value: '100%', label: 'Satisfaction', color: 'from-green-400 to-emerald-500' }
-  ]
-
   return (
-    <section className="relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 min-h-screen overflow-hidden">
+    <section className="relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 min-h-screen overflow-hidden" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       
       {/* TOP GLASSMORPHISM BLUR TRANSITION (100% -> 0%) */}
       {hasTopBlur && (
@@ -189,10 +191,10 @@ export function CTASection({
         {/* Header */}
         <div className="text-center mb-20">
           <h2 className="text-5xl md:text-6xl font-bold mb-6 text-center">
-            <span className="text-gray-900 dark:text-white">Ready to</span> <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-300 dark:via-purple-300 dark:to-pink-300 bg-clip-text text-transparent">Automate Your Future?</span>
+            <span className="text-gray-900 dark:text-white">{t('cta.header.ready')}</span> <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-300 dark:via-purple-300 dark:to-pink-300 bg-clip-text text-transparent">{t('cta.header.automate')}</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            Let's discuss your automation needs and create a custom solution that drives efficiency and innovation for your business.
+            {t('cta.header.description')}
           </p>
         </div>
 
@@ -259,7 +261,7 @@ export function CTASection({
                     tabIndex={0}
                   >
                     {cta.button}
-                    <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200" />
+                    <ArrowRight className={`w-4 h-4 ${language === 'ar' ? 'mr-2 rotate-180' : 'ml-2'} transition-transform duration-200`} />
                   </Link>
                 </div>
               </div>

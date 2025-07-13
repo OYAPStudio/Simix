@@ -3,39 +3,42 @@
 import { useState } from 'react'
 import { Metadata } from 'next'
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react'
-
-const contactInfo = [
-  {
-    icon: Mail,
-    title: 'Email Us',
-    info: 'info@simix.com',
-    description: 'Send us an email and we\'ll respond within 24 hours',
-    link: 'mailto:info@simix.com'
-  },
-  {
-    icon: Phone,
-    title: 'Call Us',
-    info: '+1 (234) 567-890',
-    description: 'Mon-Fri from 8am to 6pm EST',
-    link: 'tel:+1234567890'
-  },
-  {
-    icon: MapPin,
-    title: 'Visit Us',
-    info: '123 Automation Street',
-    description: 'Tech City, TC 12345, United States',
-    link: '#'
-  },
-  {
-    icon: Clock,
-    title: 'Business Hours',
-    info: 'Mon - Fri: 8:00 AM - 6:00 PM',
-    description: 'Weekend emergency support available',
-    link: '#'
-  }
-]
+import { useTranslation } from '@/contexts/TranslationContext'
 
 export default function ContactPage() {
+  const { t, language } = useTranslation()
+  
+  const contactInfo = [
+    {
+      icon: Mail,
+      title: t('contactPage.info.email.title'),
+      info: 'info@simix.com',
+      description: t('contactPage.info.email.description'),
+      link: 'mailto:info@simix.com'
+    },
+    {
+      icon: Phone,
+      title: t('contactPage.info.phone.title'),
+      info: '+1 (234) 567-890',
+      description: t('contactPage.info.phone.description'),
+      link: 'tel:+1234567890'
+    },
+    {
+      icon: MapPin,
+      title: t('contactPage.info.visit.title'),
+      info: t('contactPage.info.visit.address'),
+      description: t('contactPage.info.visit.description'),
+      link: '#'
+    },
+    {
+      icon: Clock,
+      title: t('contactPage.info.hours.title'),
+      info: t('contactPage.info.hours.time'),
+      description: t('contactPage.info.hours.description'),
+      link: '#'
+    }
+  ]
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -81,16 +84,15 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="pt-16">
+    <div className="pt-16" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-primary-light to-primary-DEFAULT text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Contact <span className="text-secondary-light">Us</span>
+            {t('contactPage.hero.contact')} <span className="text-secondary-light">{t('contactPage.hero.us')}</span>
           </h1>
           <p className="text-xl md:text-2xl opacity-90 leading-relaxed">
-            Ready to transform your operations with cutting-edge automation? 
-            Let's discuss your project and create a solution that drives results.
+            {t('contactPage.hero.description')}
           </p>
         </div>
       </section>
@@ -124,17 +126,17 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-                Send us a Message
+                {t('contactPage.form.title')}
               </h2>
               
               {isSubmitted ? (
                 <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-2xl p-8 text-center">
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                   <h3 className="text-2xl font-bold text-green-800 dark:text-green-400 mb-2">
-                    Message Sent Successfully!
+                    {t('contactPage.form.success.title')}
                   </h3>
                   <p className="text-green-700 dark:text-green-300">
-                    Thank you for your inquiry. We'll get back to you within 24 hours.
+                    {t('contactPage.form.success.message')}
                   </p>
                 </div>
               ) : (
@@ -142,7 +144,7 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Full Name *
+                        {t('contactPage.form.fields.name')} *
                       </label>
                       <input
                         type="text"
@@ -152,12 +154,12 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-DEFAULT focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                        placeholder="John Doe"
+                        placeholder={t('contactPage.form.placeholders.name')}
                       />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Email Address *
+                        {t('contactPage.form.fields.email')} *
                       </label>
                       <input
                         type="email"
@@ -167,7 +169,7 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-DEFAULT focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                        placeholder="john@company.com"
+                        placeholder={t('contactPage.form.placeholders.email')}
                       />
                     </div>
                   </div>
@@ -175,7 +177,7 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Company
+                        {t('contactPage.form.fields.company')}
                       </label>
                       <input
                         type="text"
@@ -184,12 +186,12 @@ export default function ContactPage() {
                         value={formData.company}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-DEFAULT focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                        placeholder="Your Company"
+                        placeholder={t('contactPage.form.placeholders.company')}
                       />
                     </div>
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Phone Number
+                        {t('contactPage.form.fields.phone')}
                       </label>
                       <input
                         type="tel"
@@ -198,14 +200,14 @@ export default function ContactPage() {
                         value={formData.phone}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-DEFAULT focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                        placeholder="+1 (234) 567-890"
+                        placeholder={t('contactPage.form.placeholders.phone')}
                       />
                     </div>
                   </div>
 
                   <div>
                     <label htmlFor="service" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Service of Interest
+                      {t('contactPage.form.fields.service')}
                     </label>
                     <select
                       id="service"
@@ -214,20 +216,20 @@ export default function ContactPage() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-DEFAULT focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                     >
-                      <option value="">Select a service</option>
-                      <option value="plc-programming">PLC Programming</option>
-                      <option value="smart-buildings">Smart Buildings</option>
-                      <option value="scada-systems">SCADA Systems</option>
-                      <option value="control-panels">Control Panels</option>
-                      <option value="electrical-design">Electrical Design</option>
-                      <option value="maintenance">Maintenance & Support</option>
-                      <option value="consultation">General Consultation</option>
+                      <option value="">{t('contactPage.form.services.select')}</option>
+                      <option value="plc-programming">{t('contactPage.form.services.plc')}</option>
+                      <option value="smart-buildings">{t('contactPage.form.services.smart')}</option>
+                      <option value="scada-systems">{t('contactPage.form.services.scada')}</option>
+                      <option value="control-panels">{t('contactPage.form.services.control')}</option>
+                      <option value="electrical-design">{t('contactPage.form.services.electrical')}</option>
+                      <option value="maintenance">{t('contactPage.form.services.maintenance')}</option>
+                      <option value="consultation">{t('contactPage.form.services.consultation')}</option>
                     </select>
                   </div>
 
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Subject *
+                      {t('contactPage.form.fields.subject')} *
                     </label>
                     <input
                       type="text"
@@ -237,13 +239,13 @@ export default function ContactPage() {
                       value={formData.subject}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-DEFAULT focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                      placeholder="Project inquiry"
+                      placeholder={t('contactPage.form.placeholders.subject')}
                     />
                   </div>
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Message *
+                      {t('contactPage.form.fields.message')} *
                     </label>
                     <textarea
                       id="message"
@@ -253,7 +255,7 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-DEFAULT focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white resize-none"
-                      placeholder="Tell us about your project requirements..."
+                      placeholder={t('contactPage.form.placeholders.message')}
                     />
                   </div>
 
@@ -265,12 +267,12 @@ export default function ContactPage() {
                     {isSubmitting ? (
                       <>
                         <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                        Sending...
+                        {t('contactPage.form.sending')}
                       </>
                     ) : (
                       <>
-                        <Send className="w-5 h-5 mr-2" />
-                        Send Message
+                        <Send className={`w-5 h-5 ${language === 'ar' ? 'ml-2 rotate-180' : 'mr-2'}`} />
+                        {t('contactPage.form.submit')}
                       </>
                     )}
                   </button>
@@ -281,34 +283,34 @@ export default function ContactPage() {
             {/* Map and Additional Info */}
             <div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-                Visit Our Office
+                {t('contactPage.visit.title')}
               </h2>
               
               {/* Map Placeholder */}
               <div className="bg-gray-200 dark:bg-gray-700 rounded-2xl h-64 mb-8 flex items-center justify-center">
                 <div className="text-center text-gray-500 dark:text-gray-400">
                   <MapPin className="w-12 h-12 mx-auto mb-2" />
-                  <p>Interactive Map</p>
-                  <p className="text-sm">123 Automation Street, Tech City</p>
+                  <p>{t('contactPage.visit.map')}</p>
+                  <p className="text-sm">{t('contactPage.visit.address')}</p>
                 </div>
               </div>
 
               {/* Additional Information */}
               <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Why Choose Simix?
+                  {t('contactPage.why.title')}
                 </h3>
                 <ul className="space-y-4">
                   {[
-                    'Free initial consultation and project assessment',
-                    '24-hour response time for all inquiries',
-                    '15+ years of industry experience',
-                    'Certified engineers and technicians',
-                    'Comprehensive warranty and support',
-                    'Custom solutions tailored to your needs'
+                    t('contactPage.why.reasons.consultation'),
+                    t('contactPage.why.reasons.response'),
+                    t('contactPage.why.reasons.experience'),
+                    t('contactPage.why.reasons.certified'),
+                    t('contactPage.why.reasons.warranty'),
+                    t('contactPage.why.reasons.custom')
                   ].map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <CheckCircle className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className={`w-5 h-5 text-green-500 ${language === 'ar' ? 'ml-3' : 'mr-3'} mt-0.5 flex-shrink-0`} />
                       <span className="text-gray-700 dark:text-gray-300">{item}</span>
                     </li>
                   ))}
